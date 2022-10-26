@@ -1,3 +1,6 @@
+import Logo from '../../components/logo/logo';
+import { Link } from 'react-router-dom';
+
 export default function RoomPage(): JSX.Element {
   return (
     <div className="page">
@@ -6,9 +9,7 @@ export default function RoomPage(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -19,9 +20,9 @@ export default function RoomPage(): JSX.Element {
                   </div>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#header">
+                  <Link className="header__nav-link" to="#header">
                     <span className="header__signout">Sign out</span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -225,9 +226,9 @@ export default function RoomPage(): JSX.Element {
             <div className="near-places__list places__list">
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#header">
+                  <Link to="#header">
                     <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place" />
-                  </a>
+                  </Link>
                 </div>
                 <div className="place-card__info">
                   <div className="place-card__price-wrapper">
@@ -243,7 +244,7 @@ export default function RoomPage(): JSX.Element {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#header">Wood and stone place</a>
+                    <Link to="#header">Wood and stone place</Link>
                   </h2>
                   <p className="place-card__type">Private room</p>
                 </div>
@@ -251,9 +252,9 @@ export default function RoomPage(): JSX.Element {
 
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#header">
+                  <Link to="#header">
                     <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place" />
-                  </a>
+                  </Link>
                 </div>
                 <div className="place-card__info">
                   <div className="place-card__price-wrapper">
@@ -269,7 +270,7 @@ export default function RoomPage(): JSX.Element {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#header">Canal View Prinsengracht</a>
+                    <Link to="#header">Canal View Prinsengracht</Link>
                   </h2>
                   <p className="place-card__type">Apartment</p>
                 </div>
@@ -280,9 +281,9 @@ export default function RoomPage(): JSX.Element {
                   <span>Premium</span>
                 </div>
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#header">
+                  <Link to="#header">
                     <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place" />
-                  </a>
+                  </Link>
                 </div>
                 <div className="place-card__info">
                   <div className="place-card__price-wrapper">
@@ -298,7 +299,7 @@ export default function RoomPage(): JSX.Element {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#header">Nice, cozy, warm big bed apartment</a>
+                    <Link to="#header">Nice, cozy, warm big bed apartment</Link>
                   </h2>
                   <p className="place-card__type">Apartment</p>
                 </div>
