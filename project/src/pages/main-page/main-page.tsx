@@ -1,15 +1,20 @@
 import PlaceCard from '../../components/place-card/place-card';
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
+import { CardProps } from '../../types/types';
+import {Helmet} from 'react-helmet-async';
 
-type NumberOfCardsProps = {
+type MainProps = {
   amountCards: number;
+  cards:CardProps[];
 }
 
-export default function MainPage({amountCards}: NumberOfCardsProps): JSX.Element {
+export default function MainPage({amountCards, cards}: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
-
+      <Helmet>
+        <title>Main Page</title>
+      </Helmet>
       <header className="header" id="header">
         <div className="container">
           <div className="header__wrapper">
@@ -77,7 +82,7 @@ export default function MainPage({amountCards}: NumberOfCardsProps): JSX.Element
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{amountCards} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -94,7 +99,7 @@ export default function MainPage({amountCards}: NumberOfCardsProps): JSX.Element
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {Array(amountCards).fill(PlaceCard())}
+                {cards.map((card) => PlaceCard(card))}
               </div>
             </section>
             <div className="cities__right-section">

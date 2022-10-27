@@ -1,10 +1,13 @@
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
+import {Helmet} from 'react-helmet-async';
 
 export default function RoomPage(): JSX.Element {
   return (
     <div className="page">
-
+      <Helmet>
+        <title>room</title>
+      </Helmet>
       <header className="header" id="header">
         <div className="container">
           <div className="header__wrapper">
