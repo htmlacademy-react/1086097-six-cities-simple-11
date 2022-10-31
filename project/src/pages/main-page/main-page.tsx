@@ -1,7 +1,7 @@
-import PlaceCard from '../../components/place-card/place-card';
+import PlaceList from '../../components/place-list/place-list';
 import Logo from '../../components/logo/logo';
-import { Link } from 'react-router-dom';
-import { TOfferCard } from '../../types';
+import {Link} from 'react-router-dom';
+import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
 
 type MainPageProps = {
@@ -98,9 +98,7 @@ export default function MainPage({amountCards, cards}: MainPageProps): JSX.Eleme
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {cards.map((card) => <PlaceCard {...card} key={card.id} />)}
-              </div>
+              {<PlaceList cards={cards} />}
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

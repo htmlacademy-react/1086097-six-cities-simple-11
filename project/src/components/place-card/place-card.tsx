@@ -1,8 +1,13 @@
 
 import { TOfferCard } from '../../types';
 import Premium from '../premium/premium';
+// import { useState } from 'react';
+import { AppRoute } from '../../const';
+import {Link} from 'react-router-dom';
 
 export default function PlaceCard({isPremium, img, price, rating, title, type, id}:TOfferCard): JSX.Element {
+  // const navigate = useNavigate();
+
   return (
     <article className="cities__card place-card">
       {isPremium ? <Premium /> : ''}
@@ -26,7 +31,7 @@ export default function PlaceCard({isPremium, img, price, rating, title, type, i
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#header">Beautiful &amp; {title}</a>
+          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
