@@ -1,12 +1,41 @@
 import MainPage from '../../pages/main-page/main-page';
+import NotFound from '../../pages/not-found/not-found';
+import LoginPage from '../../pages/login-page/login-page';
+import RoomPage from '../../pages/room-page/room-page';
+// import PrivateRoute from '../private-route/private-route';
+// import {AppRoute, AuthorizationStatus} from '../../const';
+import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {AppRoute} from '../../const';
+import {TOfferCard } from '../../types';
+import {HelmetProvider} from 'react-helmet-async';
 
-type AppScreenProps = {
+type AppProps = {
   amountCards: number;
+  cards:TOfferCard[];
 }
 
-function App({amountCards}: AppScreenProps): JSX.Element {
+function App({amountCards, cards}: AppProps): JSX.Element {
   return (
-    <MainPage amountCards={amountCards}/>
+    <HelmetProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<MainPage amountCards={amountCards} cards={cards}/>} />
+          {/* <Route path={AppRoute.Root} element={<MainPage amountCards={amountCards} cards={cards}/>} /> */}
+          <Route path={AppRoute.Room} element={<RoomPage />} />
+          <Route path={`${AppRoute.Room}/:id`} element={<RoomPage />} />
+          <Route path={AppRoute.Login} element={<LoginPage />} />
+          <Route path="*" element={<NotFound />} />
+          {/* <Route
+            path={AppRoute.Room}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <RoomPage />
+              </PrivateRoute>
+            }
+          /> */}
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
