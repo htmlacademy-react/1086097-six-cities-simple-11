@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { CardProps } from './types/types';
+import { TOfferCard } from './types';
 
-const arrayOfCards:CardProps[] = [
+const arrayOfCards:TOfferCard[] = [
   {
-    premium: true,
+    isPremium: true,
     img: 'apartment-01',
     price: '120',
     rating: '80%',
@@ -14,7 +14,7 @@ const arrayOfCards:CardProps[] = [
     id: 1,
   },
   {
-    premium: false,
+    isPremium: false,
     img: 'room',
     price: '80',
     rating: '80%',
@@ -23,7 +23,7 @@ const arrayOfCards:CardProps[] = [
     id: 2,
   },
   {
-    premium: false,
+    isPremium: false,
     img: 'apartment-02',
     price: '132',
     rating: '80%',
@@ -32,7 +32,7 @@ const arrayOfCards:CardProps[] = [
     id: 3,
   },
   {
-    premium: true,
+    isPremium: true,
     img: 'apartment-03',
     price: '180',
     rating: '100%',
@@ -41,7 +41,7 @@ const arrayOfCards:CardProps[] = [
     id: 4,
   },
   {
-    premium: false,
+    isPremium: false,
     img: 'room',
     price: '80',
     rating: '80%',

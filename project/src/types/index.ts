@@ -1,5 +1,5 @@
-export type CardProps = {
-  premium: boolean;
+export type TOfferCard = {
+  isPremium: boolean;
   img: string;
   price: string;
   rating: string;

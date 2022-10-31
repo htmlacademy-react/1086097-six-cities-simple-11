@@ -1,15 +1,15 @@
 import PlaceCard from '../../components/place-card/place-card';
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
-import { CardProps } from '../../types/types';
+import { TOfferCard } from '../../types';
 import {Helmet} from 'react-helmet-async';
 
-type MainProps = {
+type MainPageProps = {
   amountCards: number;
-  cards:CardProps[];
+  cards:TOfferCard[];
 }
 
-export default function MainPage({amountCards, cards}: MainProps): JSX.Element {
+export default function MainPage({amountCards, cards}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -99,7 +99,7 @@ export default function MainPage({amountCards, cards}: MainProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {cards.map((card) => PlaceCard(card))}
+                {cards.map((card) => <PlaceCard {...card} key={card.id} />)}
               </div>
             </section>
             <div className="cities__right-section">

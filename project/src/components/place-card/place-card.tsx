@@ -1,11 +1,11 @@
 
-import { CardProps } from '../../types/types';
+import { TOfferCard } from '../../types';
 import Premium from '../premium/premium';
 
-export default function PlaceCard({premium, img, price, rating, title, type, id}:CardProps): JSX.Element {
+export default function PlaceCard({isPremium, img, price, rating, title, type, id}:TOfferCard): JSX.Element {
   return (
-    <article key={id} className="cities__card place-card">
-      {premium ? <Premium /> : ''}
+    <article className="cities__card place-card">
+      {isPremium ? <Premium /> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#header">
           <img className="place-card__image" src={`img/${img}.jpg`} width="260" height="200" alt="Place" />
