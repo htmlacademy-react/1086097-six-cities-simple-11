@@ -1,5 +1,6 @@
 import { TOfferCard } from '../../types';
 import PlaceCard from '../../components/place-card/place-card';
+// import React, { useState } from 'react';
 
 type PlaceListProps = {
   cards:TOfferCard[];

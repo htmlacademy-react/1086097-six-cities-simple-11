@@ -1,15 +1,27 @@
 
 import { TOfferCard } from '../../types';
 import Premium from '../premium/premium';
-// import { useState } from 'react';
+import { useState } from 'react';
+// import {ChangeEvent} from 'react';
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
 
-export default function PlaceCard({isPremium, img, price, rating, title, type, id}:TOfferCard): JSX.Element {
-  // const navigate = useNavigate();
+export default function PlaceCard({isPremium, img, price, rating, title, type, id, key, isActiveCard}:TOfferCard): JSX.Element {
+
+  const [isActive, setActive] = useState<boolean>(isActiveCard);
+
+  function handleCardMouseOver(e:React.MouseEvent) {
+    setActive(true);
+    /* eslint-disable */ console.log(isActive);
+  }
+
+  function handleCardMouseOut() {
+    setActive(false);
+    /* eslint-disable */ console.log(isActive);
+  }
 
   return (
-    <article className="cities__card place-card">
+    <article key={key} className="cities__card place-card" data-active={isActive} onMouseOver={handleCardMouseOver} onMouseOut={handleCardMouseOut}>
       {isPremium ? <Premium /> : ''}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#header">
