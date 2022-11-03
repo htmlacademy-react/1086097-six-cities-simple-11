@@ -7,5 +7,4 @@ export type TOfferCard = {
   type: string;
   id: number;
   key?: number;
-  isActiveCard: boolean;
 }

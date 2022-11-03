@@ -1,32 +1,28 @@
 
 import { TOfferCard } from '../../types';
 import Premium from '../premium/premium';
-import { useState } from 'react';
-// import {ChangeEvent} from 'react';
+// import { useState } from 'react';
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
 
-export default function PlaceCard({isPremium, img, price, rating, title, type, id, key, isActiveCard}:TOfferCard): JSX.Element {
+type PlaceCardProps = {card:TOfferCard} & {onCardHover: (id:number) => void}
+// type PlaceCardProps = TOfferCard & {onCardHover: (id:number) => void}
 
-  const [isActive, setActive] = useState<boolean>(isActiveCard);
+// export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
+export default function PlaceCard({card, onCardHover}:PlaceCardProps): JSX.Element {
+  const {isPremium, img, price, rating, title, type, id} = card;
 
-  function handleCardMouseOver(e:React.MouseEvent) {
-    setActive(true);
-    /* eslint-disable */ console.log(isActive);
-  }
-
-  function handleCardMouseOut() {
-    setActive(false);
-    /* eslint-disable */ console.log(isActive);
-  }
+  const handleCardMouseOver = () => {
+    onCardHover(id);
+  };
 
   return (
-    <article key={key} className="cities__card place-card" data-active={isActive} onMouseOver={handleCardMouseOver} onMouseOut={handleCardMouseOut}>
-      {isPremium ? <Premium /> : ''}
+    <article className="cities__card place-card" onMouseOver={handleCardMouseOver}>
+      {isPremium ? <Premium /> : null}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#header">
+        <Link to="#header">
           <img className="place-card__image" src={`img/${img}.jpg`} width="260" height="200" alt="Place" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">

@@ -9,7 +9,6 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Beautiful &amp; luxurious apartment at great location',
     type: 'Apartment',
     id: 1,
-    isActiveCard: false,
   },
   {
     isPremium: false,
@@ -19,7 +18,6 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Wood and stone place',
     type: 'Private room',
     id: 2,
-    isActiveCard: false,
   },
   {
     isPremium: false,
@@ -29,7 +27,6 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Canal View Prinsengracht',
     type: 'Apartment',
     id: 3,
-    isActiveCard: false,
   },
   {
     isPremium: true,
@@ -39,7 +36,6 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Nice, cozy, warm big bed apartment',
     type: 'Apartment',
     id: 4,
-    isActiveCard: false,
   },
   {
     isPremium: false,
@@ -49,7 +45,6 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Wood and stone place',
     type: 'Private room',
     id: 5,
-    isActiveCard: false,
   },
 ];
 
