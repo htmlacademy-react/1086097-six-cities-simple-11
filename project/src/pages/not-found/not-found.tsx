@@ -1,7 +1,7 @@
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-// import './not-found.css';
+import './not-found.css';
 
 export default function NotFound(): JSX.Element {
   return (

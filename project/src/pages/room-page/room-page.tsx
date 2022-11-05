@@ -1,9 +1,22 @@
 import Logo from '../../components/logo/logo';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
+import CommentForm from '../../components/comment-form/comment-form';
+import { TOfferCard } from '../../types';
+import NotFound from '../../pages/not-found/not-found';
+import { useParams } from 'react-router-dom';
 
-export default function RoomPage(): JSX.Element {
-  return (
+type RoomPageProps = {
+  cards: TOfferCard[];
+}
+
+export default function RoomPage({cards}:RoomPageProps): JSX.Element {
+  const params = useParams();
+  // const cardId = Number(window.location.pathname.split('/room/').pop());
+
+  const currentCard: TOfferCard | undefined = cards.find((card) => card.id === Number(params.id));
+
+  return currentCard ? (
     <div className="page">
       <Helmet>
         <title>room</title>
@@ -33,12 +46,12 @@ export default function RoomPage(): JSX.Element {
         </div>
       </header>
 
-      <main className="page__main page__main--property">
+      <main className="page__main page__main--property" data-id={currentCard.id}>
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="studio" />
+                <img className="property__image" src={`img/${currentCard.img}.jpg`} alt="studio" />
               </div>
               <div className="property__image-wrapper">
                 <img className="property__image" src="img/apartment-01.jpg" alt="studio" />
@@ -59,24 +72,27 @@ export default function RoomPage(): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {currentCard.isPremium ?
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div> : null}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {currentCard.title}
+                  {/* Beautiful &amp; luxurious studio at great location */}
                 </h1>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  <span style={{width: currentCard.rating}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">4.8</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {currentCard.type}
+                  {/* Apartment */}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
                   3 Bedrooms
@@ -86,7 +102,7 @@ export default function RoomPage(): JSX.Element {
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
+                <b className="property__price-value">&euro;{currentCard.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
@@ -172,52 +188,7 @@ export default function RoomPage(): JSX.Element {
                     </div>
                   </li>
                 </ul>
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div className="reviews__rating-form form__rating">
-                    <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                  </div>
-                </form>
+                {<CommentForm />}
               </section>
             </div>
           </div>
@@ -312,5 +283,5 @@ export default function RoomPage(): JSX.Element {
         </div>
       </main>
     </div>
-  );
+  ) : (<NotFound />);
 }
