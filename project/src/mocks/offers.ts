@@ -9,6 +9,11 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Beautiful &amp; luxurious apartment at great location',
     type: 'Apartment',
     id: 1,
+    point:{
+      city: 'Amsterdam',
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+    }
   },
   {
     isPremium: false,
@@ -18,6 +23,11 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Wood and stone place',
     type: 'Private room',
     id: 2,
+    point:{
+      city: 'Amsterdam',
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
+    }
   },
   {
     isPremium: false,
@@ -27,6 +37,11 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Canal View Prinsengracht',
     type: 'Apartment',
     id: 3,
+    point:{
+      city: 'Amsterdam',
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+    }
   },
   {
     isPremium: true,
@@ -36,6 +51,11 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Nice, cozy, warm big bed apartment',
     type: 'Apartment',
     id: 4,
+    point:{
+      city: 'Amsterdam',
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+    }
   },
   {
     isPremium: false,

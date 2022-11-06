@@ -3,6 +3,9 @@ import Logo from '../../components/logo/logo';
 import {Link} from 'react-router-dom';
 import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
+import Map from '../../components/map/map';
+import { points } from '../../mocks/points';
+import { city } from '../../mocks/city';
 
 type MainPageProps = {
   amountCards: number;
@@ -101,7 +104,7 @@ export default function MainPage({amountCards, cards}: MainPageProps): JSX.Eleme
               {<PlaceList cards={cards} />}
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              {<Map city={city} points={points} />}
             </div>
           </div>
         </div>
