@@ -13,35 +13,37 @@ import 'leaflet/dist/leaflet.css';
 type MapProps = {
   city: TCity;
   points: TPoints;
-  selectedPoint?: TPoint | undefined;
+  selectedPoint: TPoint | undefined;
 }
 
 export default function Map({city, points, selectedPoint}: MapProps): JSX.Element {
-  /* eslint-disable */console.log(points);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  const defaultCustomIcon = leaflet.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [27, 39],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = leaflet.icon({
-    iconUrl: 'img/pin-active.svg',
-    iconSize: [27, 39],
-    iconAnchor: [20, 40],
-  });
-
   useEffect(() => {
+    const defaultCustomIcon = leaflet.icon({
+      iconUrl: 'img/pin.svg',
+      iconSize: [27, 39],
+      iconAnchor: [27, 40],
+    });
+
+    const currentCustomIcon = leaflet.icon({
+      iconUrl: 'img/pin-active.svg',
+      iconSize: [27, 39],
+      iconAnchor: [27, 40],
+    });
+
     if (map) {
       points.forEach((point) => {
+        /* eslint-disable */ console.log(selectedPoint);
         leaflet
           .marker({
             lat: point.latitude,
             lng: point.longitude,
           }, {
-            icon: defaultCustomIcon,
+            icon: (point.title === selectedPoint?.title)
+              ? currentCustomIcon
+              : defaultCustomIcon,
           })
           .addTo(map);
       });

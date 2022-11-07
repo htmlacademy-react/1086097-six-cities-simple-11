@@ -10,7 +10,7 @@ const arrayOfCards:TOfferCard[] = [
     type: 'Apartment',
     id: 1,
     point:{
-      city: 'Amsterdam',
+      title: 'Beautiful &amp; luxurious apartment at great location',
       latitude: 52.3909553943508,
       longitude: 4.85309666406198,
     }
@@ -24,7 +24,7 @@ const arrayOfCards:TOfferCard[] = [
     type: 'Private room',
     id: 2,
     point:{
-      city: 'Amsterdam',
+      title: 'Wood and stone place',
       latitude: 52.3609553943508,
       longitude: 4.85309666406198,
     }
@@ -38,7 +38,7 @@ const arrayOfCards:TOfferCard[] = [
     type: 'Apartment',
     id: 3,
     point:{
-      city: 'Amsterdam',
+      title: 'Canal View Prinsengracht',
       latitude: 52.3909553943508,
       longitude: 4.929309666406198,
     }
@@ -52,7 +52,7 @@ const arrayOfCards:TOfferCard[] = [
     type: 'Apartment',
     id: 4,
     point:{
-      city: 'Amsterdam',
+      title: 'Nice, cozy, warm big bed apartment',
       latitude: 52.3809553943508,
       longitude: 4.939309666406198,
     }

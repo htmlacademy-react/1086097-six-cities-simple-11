@@ -7,7 +7,7 @@ export type TOfferCard = {
   type: string;
   id: number;
   point?:{
-    city: string;
+    title: string;
     latitude: number;
     longitude: number;
   };
@@ -21,7 +21,7 @@ export type TCity = {
 };
 
 export type TPoint = {
-  city: string;
+  title: string;
   latitude: number;
   longitude: number;
 };
