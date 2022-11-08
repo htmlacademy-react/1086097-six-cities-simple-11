@@ -17,7 +17,7 @@ export default function PlaceCard({card, onCardHover}:PlaceCardProps): JSX.Eleme
   };
 
   return (
-    <article className="cities__card place-card" onMouseOver={handleCardMouseOver}>
+    <article className="cities__card place-card" onMouseMove={handleCardMouseOver}>
       {isPremium ? <Premium /> : null}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to="#header">

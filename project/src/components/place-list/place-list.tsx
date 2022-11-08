@@ -1,19 +1,22 @@
 import { TOfferCard } from '../../types';
 import PlaceCard from '../../components/place-card/place-card';
 import React, { useState } from 'react';
-import {arrayOfCards} from '../../mocks/offers';
+// import {arrayOfCards} from '../../mocks/offers';
 
 type PlaceListProps = {
   cards:TOfferCard[];
+  onListCardHover: (id:number | undefined) => void;
 }
 
-export default function PlaceList({cards}:PlaceListProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState<TOfferCard>();
+export default function PlaceList({cards, onListCardHover}:PlaceListProps): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<number | undefined>(0);
 
   const onCardHover = (idCard:number) => {
-    setActiveCard(arrayOfCards[idCard]);
-    /* eslint-disable */ console.log(activeCard);
+    setActiveCardId(idCard);
+    onListCardHover(activeCardId);
   };
+
+  // /* eslint-disable */ console.log(activeCardId);
 
   return (
     <div className="cities__places-list places__list tabs__content">

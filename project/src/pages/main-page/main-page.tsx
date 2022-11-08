@@ -3,6 +3,10 @@ import Logo from '../../components/logo/logo';
 import {Link} from 'react-router-dom';
 import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
+import Map from '../../components/map/map';
+import {points} from '../../mocks/points';
+import {city} from '../../mocks/city';
+import {useState} from 'react';
 
 type MainPageProps = {
   amountCards: number;
@@ -10,6 +14,14 @@ type MainPageProps = {
 }
 
 export default function MainPage({amountCards, cards}: MainPageProps): JSX.Element {
+
+  const [selectedCard, setSelectedCard] = useState<TOfferCard | undefined>();
+
+  const onListCardHover = (cardId:number | undefined) => {
+    const currentCard = cards.find((card) => card.id === cardId);
+    setSelectedCard(currentCard);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -98,10 +110,10 @@ export default function MainPage({amountCards, cards}: MainPageProps): JSX.Eleme
                   <li className="places__option" tabIndex={5}>Top rated first</li>
                 </ul>
               </form>
-              {<PlaceList cards={cards} />}
+              {<PlaceList cards={cards} onListCardHover={onListCardHover} />}
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              {<Map city={city} points={points} selectedPoint={selectedCard?.point} />}
             </div>
           </div>
         </div>
