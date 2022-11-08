@@ -17,7 +17,7 @@ export default function MainPage({amountCards, cards}: MainPageProps): JSX.Eleme
 
   const [selectedCard, setSelectedCard] = useState<TOfferCard | undefined>();
 
-  const onListCardHover = (cardId:number) => {
+  const onListCardHover = (cardId:number | undefined) => {
     const currentCard = cards.find((card) => card.id === cardId);
     setSelectedCard(currentCard);
   };

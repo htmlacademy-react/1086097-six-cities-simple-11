@@ -35,13 +35,12 @@ export default function Map({city, points, selectedPoint}: MapProps): JSX.Elemen
 
     if (map) {
       points.forEach((point) => {
-        /* eslint-disable */ console.log(selectedPoint);
         leaflet
           .marker({
             lat: point.latitude,
             lng: point.longitude,
           }, {
-            icon: (point.title === selectedPoint?.title)
+            icon: (selectedPoint && point.title === selectedPoint.title)
               ? currentCustomIcon
               : defaultCustomIcon,
           })

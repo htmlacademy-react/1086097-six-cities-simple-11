@@ -5,11 +5,11 @@ import React, { useState } from 'react';
 
 type PlaceListProps = {
   cards:TOfferCard[];
-  onListCardHover: (id:number) => void;
+  onListCardHover: (id:number | undefined) => void;
 }
 
 export default function PlaceList({cards, onListCardHover}:PlaceListProps): JSX.Element {
-  const [activeCardId, setActiveCardId] = useState<number>(1);
+  const [activeCardId, setActiveCardId] = useState<number | undefined>(0);
 
   const onCardHover = (idCard:number) => {
     setActiveCardId(idCard);

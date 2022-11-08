@@ -19,4 +19,9 @@ export const points = [
     latitude: 52.3809553943508,
     longitude: 4.939309666406198,
   },
+  {
+    title: 'Wood and stone',
+    latitude: 52.3209553943508,
+    longitude: 4.939309666406198,
+  },
 ];

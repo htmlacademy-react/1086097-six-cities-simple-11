@@ -62,9 +62,14 @@ const arrayOfCards:TOfferCard[] = [
     img: 'room',
     price: '80',
     rating: '80%',
-    title: 'Wood and stone place',
+    title: 'Wood and stone',
     type: 'Private room',
     id: 5,
+    point:{
+      title: 'Wood and stone',
+      latitude: 52.3209553943508,
+      longitude: 4.939309666406198,
+    }
   },
 ];
 
