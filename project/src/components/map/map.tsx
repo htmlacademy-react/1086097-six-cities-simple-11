@@ -1,5 +1,5 @@
 
-import { TPoint, TPoints, TCity} from '../../types';
+import { TOfferCard, TCity, TPoint} from '../../types';
 import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/useMap';
 // import { useState } from 'react';
@@ -12,11 +12,11 @@ import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   city: TCity;
-  points: TPoints;
+  offers: TOfferCard[];
   selectedPoint: TPoint | undefined;
 }
 
-export default function Map({city, points, selectedPoint}: MapProps): JSX.Element {
+export default function Map({city, offers, selectedPoint}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -34,20 +34,20 @@ export default function Map({city, points, selectedPoint}: MapProps): JSX.Elemen
     });
 
     if (map) {
-      points.forEach((point) => {
+      offers.forEach((offer) => {
         leaflet
           .marker({
-            lat: point.latitude,
-            lng: point.longitude,
+            lat: offer.point.latitude,
+            lng: offer.point.longitude,
           }, {
-            icon: (selectedPoint && point.title === selectedPoint.title)
+            icon: (selectedPoint && offer.title === selectedPoint.title)
               ? currentCustomIcon
               : defaultCustomIcon,
           })
           .addTo(map);
       });
     }
-  }, [map, points, selectedPoint]);
+  }, [map, offers, selectedPoint]);
 
   return <section className="cities__map map" ref={mapRef}></section>;
 }

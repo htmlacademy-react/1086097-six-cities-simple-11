@@ -13,7 +13,15 @@ const arrayOfCards:TOfferCard[] = [
       title: 'Beautiful &amp; luxurious apartment at great location',
       latitude: 52.3909553943508,
       longitude: 4.85309666406198,
-    }
+    },
+    city: {
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
   {
     isPremium: false,
@@ -27,7 +35,15 @@ const arrayOfCards:TOfferCard[] = [
       title: 'Wood and stone place',
       latitude: 52.3609553943508,
       longitude: 4.85309666406198,
-    }
+    },
+    city: {
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
   {
     isPremium: false,
@@ -37,11 +53,19 @@ const arrayOfCards:TOfferCard[] = [
     title: 'Canal View Prinsengracht',
     type: 'Apartment',
     id: 3,
-    point:{
+    point: {
       title: 'Canal View Prinsengracht',
       latitude: 52.3909553943508,
       longitude: 4.929309666406198,
-    }
+    },
+    city: {
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
   {
     isPremium: true,
@@ -55,7 +79,15 @@ const arrayOfCards:TOfferCard[] = [
       title: 'Nice, cozy, warm big bed apartment',
       latitude: 52.3809553943508,
       longitude: 4.939309666406198,
-    }
+    },
+    city: {
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
   {
     isPremium: false,
@@ -69,7 +101,15 @@ const arrayOfCards:TOfferCard[] = [
       title: 'Wood and stone',
       latitude: 52.3209553943508,
       longitude: 4.939309666406198,
-    }
+    },
+    city: {
+      location: {
+        latitude: 52.3909553943508,
+        longitude: 4.85309666406198,
+        zoom: 10,
+      },
+      name: 'Amsterdam',
+    },
   },
 ];
 
