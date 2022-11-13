@@ -22,7 +22,7 @@ function App({amountCards, cards}: AppProps): JSX.Element {
           <Route index element={<MainPage amountCards={amountCards} cards={cards}/>} />
           {/* <Route path={AppRoute.Root} element={<MainPage amountCards={amountCards} cards={cards}/>} /> */}
           {/* <Route path={AppRoute.Room} element={<RoomPage cards={cards}/>} /> */}
-          <Route path={`${AppRoute.Room}/:id`} element={<RoomPage cards={cards}/>} />
+          <Route path={`${AppRoute.Room}/:id`} element={<RoomPage cards={cards} />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
           {/* <Route

@@ -3,9 +3,11 @@ import NearPlacesList from '../../components/near-places-list/near-places-list';
 import {Link} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import CommentForm from '../../components/comment-form/comment-form';
-import { TOfferCard } from '../../types';
+import CommentList from '../../components/comment-list/comment-list';
+import { TOfferCard} from '../../types';
 import NotFound from '../../pages/not-found/not-found';
 import { useParams } from 'react-router-dom';
+import {arrayOfComments} from '../../mocks/comments';
 
 type RoomPageProps = {
   cards: TOfferCard[];
@@ -13,7 +15,7 @@ type RoomPageProps = {
 
 export default function RoomPage({cards}:RoomPageProps): JSX.Element {
   const params = useParams();
-  // const cardId = Number(window.location.pathname.split('/room/').pop());
+  const commentsAmount = arrayOfComments.length;
 
   const onListCardHover = (cardId:number | undefined) => {
     const currentCard = cards.find((card) => card.id === 2);
@@ -169,31 +171,8 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-                <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                      </div>
-                      <span className="reviews__user-name">
-                        Max
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                    </div>
-                  </li>
-                </ul>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsAmount}</span></h2>
+                {<CommentList allComments={arrayOfComments} />}
                 {<CommentForm />}
               </section>
             </div>

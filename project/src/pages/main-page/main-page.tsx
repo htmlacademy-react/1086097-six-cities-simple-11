@@ -112,7 +112,7 @@ export default function MainPage({amountCards, cards}: MainPageProps): JSX.Eleme
               <СitiesList cards={cards} onListCardHover={onListCardHover} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} offers={cards} selectedPoint={selectedCard?.point} />
+              <Map city={city} cards={cards} selectedPoint={selectedCard} />
             </div>
           </div>
         </div>
