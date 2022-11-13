@@ -1,8 +1,9 @@
 
-import { TPoint, TPoints, TCity} from '../../types';
+import { TOfferCard, TCity} from '../../types';
 import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/useMap';
 // import { useState } from 'react';
+import {mapIconUrl} from '../../const';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -12,42 +13,42 @@ import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   city: TCity;
-  points: TPoints;
-  selectedPoint: TPoint | undefined;
+  cards: TOfferCard[];
+  selectedPoint: TOfferCard | undefined;
 }
 
-export default function Map({city, points, selectedPoint}: MapProps): JSX.Element {
+export default function Map({city, cards, selectedPoint}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     const defaultCustomIcon = leaflet.icon({
-      iconUrl: 'img/pin.svg',
+      iconUrl: mapIconUrl.url,
       iconSize: [27, 39],
       iconAnchor: [27, 40],
     });
 
     const currentCustomIcon = leaflet.icon({
-      iconUrl: 'img/pin-active.svg',
+      iconUrl: mapIconUrl.urlActive,
       iconSize: [27, 39],
       iconAnchor: [27, 40],
     });
 
     if (map) {
-      points.forEach((point) => {
+      cards.forEach((card) => {
         leaflet
           .marker({
-            lat: point.latitude,
-            lng: point.longitude,
+            lat: card.point.latitude,
+            lng: card.point.longitude,
           }, {
-            icon: (selectedPoint && point.title === selectedPoint.title)
+            icon: (selectedPoint && card.id === selectedPoint.id)
               ? currentCustomIcon
               : defaultCustomIcon,
           })
           .addTo(map);
       });
     }
-  }, [map, points, selectedPoint]);
+  }, [map, cards, selectedPoint]);
 
   return <section className="cities__map map" ref={mapRef}></section>;
 }

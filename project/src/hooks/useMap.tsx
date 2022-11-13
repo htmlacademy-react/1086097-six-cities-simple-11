@@ -2,6 +2,7 @@ import {Map} from 'leaflet';
 import {TCity} from '../types';
 import leaflet from 'leaflet';
 import { useEffect, useState, MutableRefObject, useRef } from 'react';
+import {TILE_LAYER, TILE_LAYER_ATTRIBUTION} from '../const';
 
 function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: TCity): Map | null {
   const [map, setMap] = useState<Map | null>(null);
@@ -11,14 +12,14 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: TCity): Map 
     if (mapRef.current && !isRenderedRef.current) {
       const instance = leaflet.map(mapRef.current, {
         center: {
-          lat: city.latitude,
-          lng: city.longitude,
+          lat: Number(city.location.latitude),
+          lng: Number(city.location.longitude),
         },
-        zoom: 10
+        zoom: Number(city.location.zoom)
       });
 
-      leaflet.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      leaflet.tileLayer(TILE_LAYER, {
+        attribution: TILE_LAYER_ATTRIBUTION,
       }).addTo(instance);
 
       setMap(instance);

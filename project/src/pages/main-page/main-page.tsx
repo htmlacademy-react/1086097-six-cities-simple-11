@@ -1,10 +1,9 @@
-import PlaceList from '../../components/place-list/place-list';
+import СitiesList from '../../components/cities-list/cities-list';
 import Logo from '../../components/logo/logo';
 import {Link} from 'react-router-dom';
 import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
 import Map from '../../components/map/map';
-import {points} from '../../mocks/points';
 import {city} from '../../mocks/city';
 import {useState} from 'react';
 
@@ -110,10 +109,10 @@ export default function MainPage({amountCards, cards}: MainPageProps): JSX.Eleme
                   <li className="places__option" tabIndex={5}>Top rated first</li>
                 </ul>
               </form>
-              {<PlaceList cards={cards} onListCardHover={onListCardHover} />}
+              <СitiesList cards={cards} onListCardHover={onListCardHover} />
             </section>
             <div className="cities__right-section">
-              {<Map city={city} points={points} selectedPoint={selectedCard?.point} />}
+              <Map city={city} cards={cards} selectedPoint={selectedCard} />
             </div>
           </div>
         </div>

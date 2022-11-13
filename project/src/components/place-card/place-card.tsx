@@ -5,21 +5,23 @@ import Premium from '../premium/premium';
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
 
-type PlaceCardProps = {card:TOfferCard} & {onCardHover: (id:number) => void}
+type PlaceCardProps = {card:TOfferCard} & {classCard:string} &{onCardHover: (id:number) => void}
 // type PlaceCardProps = TOfferCard & {onCardHover: (id:number) => void}
 
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
-export default function PlaceCard({card, onCardHover}:PlaceCardProps): JSX.Element {
+export default function PlaceCard({card, classCard, onCardHover}:PlaceCardProps): JSX.Element {
   const {isPremium, img, price, rating, title, type, id} = card;
 
   const handleCardMouseOver = () => {
     onCardHover(id);
   };
 
+  const selectedClassCard = classCard;
+
   return (
-    <article className="cities__card place-card" onMouseMove={handleCardMouseOver}>
+    <article className={`${selectedClassCard}__card place-card`} onMouseMove={handleCardMouseOver}>
       {isPremium ? <Premium /> : null}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${selectedClassCard}__image-wrapper place-card__image-wrapper`}>
         <Link to="#header">
           <img className="place-card__image" src={`img/${img}.jpg`} width="260" height="200" alt="Place" />
         </Link>
