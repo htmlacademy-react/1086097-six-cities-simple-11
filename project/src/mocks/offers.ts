@@ -111,6 +111,51 @@ const arrayOfCards:TOfferCard[] = [
       name: 'Amsterdam',
     },
   },
+  {
+    isPremium: false,
+    img: 'room',
+    price: '80',
+    rating: '80%',
+    title: 'Wood and stone',
+    type: 'Private room',
+    id: 5,
+    point:{
+      title: 'Wood and stone',
+      latitude: 51.2217553943508,
+      longitude: 6.77616666406198,
+    },
+    city: {
+      location: {
+        latitude: 51.2217553943508,
+        longitude: 6.77616666406198,
+        zoom: 10,
+      },
+      name: 'Dusseldorf',
+    },
+  },
+  {
+    isPremium: false,
+    img: 'room',
+    price: '80',
+    rating: '80%',
+    title: 'Wood and stone',
+    type: 'Private room',
+    id: 5,
+    point:{
+      title: 'Wood and stone',
+      latitude: 48.5009553943508,
+      longitude: 2.20009666406198
+    },
+    city: {
+      location: {
+        latitude: 48.5009553943508,
+        longitude: 2.20009666406198,
+        zoom: 10,
+      },
+      name: 'Paris',
+    },
+  },
+
 ];
 
 export {arrayOfCards};
