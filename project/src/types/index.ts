@@ -36,6 +36,8 @@ export type TCity = {
   name: string;
 };
 
+export type TCitys = TCity[];
+
 export type TPoint = {
   title: string;
   latitude: number;

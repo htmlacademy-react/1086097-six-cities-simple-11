@@ -1,18 +1,24 @@
-import СitiesList from '../../components/cities-list/cities-list';
+import PlaceList from '../../components/place-list/place-list';
+import CitysList from '../../components/citys-list/citys-list';
 import Logo from '../../components/logo/logo';
 import {Link} from 'react-router-dom';
-import {TOfferCard} from '../../types';
+import {TOfferCard, TCitys} from '../../types';
 import {Helmet} from 'react-helmet-async';
 import Map from '../../components/map/map';
-import {city} from '../../mocks/city';
+// import {citys} from '../../mocks/citys';
 import {useState} from 'react';
+
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
+import {сityСhange} from '../../store/action';
 
 type MainPageProps = {
   amountCards: number;
-  cards:TOfferCard[];
+  cards: TOfferCard[];
+  citys: TCitys;
 }
 
-export default function MainPage({amountCards, cards}: MainPageProps): JSX.Element {
+export default function MainPage({amountCards, cards, citys}: MainPageProps): JSX.Element {
 
   const [selectedCard, setSelectedCard] = useState<TOfferCard | undefined>();
 
@@ -55,38 +61,7 @@ export default function MainPage({amountCards, cards}: MainPageProps): JSX.Eleme
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="/">
-                  <span>Paris</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="/">
-                  <span>Cologne</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="/">
-                  <span>Brussels</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item tabs__item--active" to="/">
-                  <span>Amsterdam</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="/">
-                  <span>Hamburg</span>
-                </Link>
-              </li>
-              <li className="locations__item">
-                <Link className="locations__item-link tabs__item" to="/">
-                  <span>Dusseldorf</span>
-                </Link>
-              </li>
-            </ul>
+            <CitysList citys={citys} />
           </section>
         </div>
         <div className="cities">
@@ -109,10 +84,10 @@ export default function MainPage({amountCards, cards}: MainPageProps): JSX.Eleme
                   <li className="places__option" tabIndex={5}>Top rated first</li>
                 </ul>
               </form>
-              <СitiesList cards={cards} onListCardHover={onListCardHover} />
+              <PlaceList cards={cards} onListCardHover={onListCardHover} />
             </section>
             <div className="cities__right-section">
-              <Map city={city} cards={cards} selectedPoint={selectedCard} />
+              <Map city={citys[0]} cards={cards} selectedPoint={selectedCard} />
             </div>
           </div>
         </div>

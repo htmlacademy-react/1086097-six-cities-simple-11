@@ -113,14 +113,14 @@ const arrayOfCards:TOfferCard[] = [
   },
   {
     isPremium: false,
-    img: 'room',
+    img: 'apartment-02',
     price: '80',
     rating: '80%',
-    title: 'Wood and stone',
+    title: 'Dusseldorf',
     type: 'Private room',
-    id: 5,
+    id: 6,
     point:{
-      title: 'Wood and stone',
+      title: 'Dusseldorf',
       latitude: 51.2217553943508,
       longitude: 6.77616666406198,
     },
@@ -134,15 +134,15 @@ const arrayOfCards:TOfferCard[] = [
     },
   },
   {
-    isPremium: false,
+    isPremium: true,
     img: 'room',
     price: '80',
     rating: '80%',
-    title: 'Wood and stone',
+    title: 'Paris',
     type: 'Private room',
-    id: 5,
+    id: 7,
     point:{
-      title: 'Wood and stone',
+      title: 'Paris',
       latitude: 48.5009553943508,
       longitude: 2.20009666406198
     },
@@ -155,7 +155,72 @@ const arrayOfCards:TOfferCard[] = [
       name: 'Paris',
     },
   },
-
+  {
+    isPremium: true,
+    img: 'room',
+    price: '80',
+    rating: '80%',
+    title: 'Hamburg',
+    type: 'Private room',
+    id: 8,
+    point:{
+      title: 'Hamburg',
+      latitude: 53.5510853943508,
+      longitude: 9.99368666406198,
+    },
+    city: {
+      location: {
+        latitude: 53.5510853943508,
+        longitude: 9.99368666406198,
+        zoom: 10,
+      },
+      name: 'Hamburg',
+    },
+  },
+  {
+    isPremium: true,
+    img: 'room',
+    price: '80',
+    rating: '80%',
+    title: 'Brussels',
+    type: 'Private room',
+    id: 9,
+    point:{
+      title: 'Brussels',
+      latitude: 50.8504500943508,
+      longitude: 4.34878006406198,
+    },
+    city: {
+      location: {
+        latitude: 50.8504500943508,
+        longitude: 4.34878006406198,
+        zoom: 10,
+      },
+      name: 'Brussels',
+    },
+  },
+  {
+    isPremium: true,
+    img: 'room',
+    price: '80',
+    rating: '80%',
+    title: 'Cologne',
+    type: 'Private room',
+    id: 10,
+    point:{
+      title: 'Cologne',
+      latitude: 45.5786200943508,
+      longitude: 9.94180006406198,
+    },
+    city: {
+      location: {
+        latitude: 45.5786200943508,
+        longitude: 9.94180006406198,
+        zoom: 10,
+      },
+      name: 'Cologne',
+    },
+  },
 ];
 
 export {arrayOfCards};

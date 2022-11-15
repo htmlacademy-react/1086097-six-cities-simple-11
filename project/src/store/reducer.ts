@@ -3,17 +3,18 @@ import {gettingOffers, сityСhange} from './action';
 import {arrayOfCards} from '../mocks/offers';
 
 const initialState = {
-  city: 'Amsterdam',
-  cards: arrayOfCards,
+  currentCity: 'Amsterdam',
+  offers: arrayOfCards,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(gettingOffers, (state) => {
-      state.cards = arrayOfCards.filter((card) => card.city.name === state.city);
+    .addCase(gettingOffers, (state, action) => {
+      state.offers = action.payload;
     })
     .addCase(сityСhange, (state, action) => {
-      state.city = action.payload;
+      state.currentCity = String(action.payload);
+      state.offers = state.offers.filter((card) => card.city.name === state.currentCity);
     });
 });
 
