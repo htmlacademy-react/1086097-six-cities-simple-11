@@ -1,17 +1,19 @@
 import City from '../city/city';
-import {TCitys} from '../../types';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {сityСhange} from '../../store/action';
 
-type CitysListProps = {
-  citys: TCitys;
-  onLinkClick: (id: string) => void;
-}
+export default function CitysList(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const citys = useAppSelector((state) => state.citys);
 
-
-export default function CitysList({citys, onLinkClick}:CitysListProps): JSX.Element {
+  const handleLinkClick = (name: string) => {
+    dispatch(сityСhange(name));
+  };
 
   return (
     <ul className="locations__list tabs__list">
-      {citys.map((city) => <City city={city} onLinkClick={onLinkClick} key={city.name}/>)}
+      {citys.map((city) => <City city={city} onLinkClick={handleLinkClick} key={city.name}/>)}
     </ul>
   );
 }

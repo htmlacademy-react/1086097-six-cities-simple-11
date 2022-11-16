@@ -1,8 +1,9 @@
 
-import { TOfferCard, TCity} from '../../types';
+import {TOfferCard} from '../../types';
 import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/useMap';
 // import { useState } from 'react';
+import {useAppSelector} from '../../hooks/useAppSelector';
 import {mapIconUrl} from '../../const';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -12,14 +13,17 @@ import 'leaflet/dist/leaflet.css';
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
 
 type MapProps = {
-  city: TCity;
-  cards: TOfferCard[];
   selectedPoint: TOfferCard | undefined;
 }
 
-export default function Map({city, cards, selectedPoint}: MapProps): JSX.Element {
+export default function Map({selectedPoint}: MapProps): JSX.Element {
+  const currentNameOfCity = useAppSelector((state) => state.currentNameOfCity);
+  const citys = useAppSelector((state) => state.citys);
+  const currentCity = citys.find((city) => city.name === currentNameOfCity);
+  const cards = useAppSelector((state) => state.offersByName);
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, currentCity);
 
   useEffect(() => {
     const defaultCustomIcon = leaflet.icon({
@@ -48,7 +52,7 @@ export default function Map({city, cards, selectedPoint}: MapProps): JSX.Element
           .addTo(map);
       });
     }
-  }, [map, cards, selectedPoint]);
+  }, [map, cards, selectedPoint, currentCity]);
 
   return <section className="cities__map map" ref={mapRef}></section>;
 }

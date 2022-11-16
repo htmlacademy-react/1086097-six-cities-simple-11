@@ -12,7 +12,7 @@ export default function City({city, onLinkClick}:CityProps): JSX.Element {
 
   return (
     <li className="locations__item">
-      <Link className="locations__item-link tabs__item" data-city={name} to="/" onMouseMove={handleLinkClick}>
+      <Link className="locations__item-link tabs__item" data-city={name} to="/" onClick={handleLinkClick}>
         <span>{name}</span>
       </Link>
     </li>

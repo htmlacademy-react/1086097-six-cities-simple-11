@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './store';
-import {citys} from './mocks/citys';
 
 const Setting = {
   amountCards: 312,
@@ -16,7 +15,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store = {store}>
-      <App amountCards={Setting.amountCards} cards={store.getState().offers} citys={citys}/>
+      {/* <App amountCards={Setting.amountCards} cards={store.getState().offers} citys={citys}/> */}
+      <App amountCards={Setting.amountCards} />
     </Provider>
   </React.StrictMode>,
 );

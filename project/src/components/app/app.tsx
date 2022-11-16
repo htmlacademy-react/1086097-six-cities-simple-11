@@ -6,21 +6,21 @@ import RoomPage from '../../pages/room-page/room-page';
 // import {AppRoute, AuthorizationStatus} from '../../const';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const';
-import {TOfferCard, TCitys} from '../../types';
 import {HelmetProvider} from 'react-helmet-async';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
 type AppProps = {
   amountCards: number;
-  cards:TOfferCard[];
-  citys: TCitys;
 }
 
-function App({amountCards, cards, citys}: AppProps): JSX.Element {
+function App({amountCards}: AppProps): JSX.Element {
+  const cards = useAppSelector((state) => state.offersByName);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route index element={<MainPage amountCards={amountCards} cards={cards} citys={citys}/>} />
+          <Route index element={<MainPage amountCards={amountCards} cards={cards} />} />
           {/* <Route path={AppRoute.Root} element={<MainPage amountCards={amountCards} cards={cards}/>} /> */}
           {/* <Route path={AppRoute.Room} element={<RoomPage cards={cards}/>} /> */}
           <Route path={`${AppRoute.Room}/:id`} element={<RoomPage cards={cards} />} />

@@ -1,10 +1,14 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {gettingOffers, сityСhange} from './action';
 import {arrayOfCards} from '../mocks/offers';
+import {citys} from '../mocks/citys';
+// import {TOfferCard} from '../types/';
 
 const initialState = {
-  currentCity: 'Amsterdam',
+  citys: citys,
+  currentNameOfCity: 'Paris',
   offers: arrayOfCards,
+  offersByName: arrayOfCards.filter((card) => card.city.name === 'Paris'),
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -13,8 +17,8 @@ const reducer = createReducer(initialState, (builder) => {
       state.offers = action.payload;
     })
     .addCase(сityСhange, (state, action) => {
-      state.currentCity = String(action.payload);
-      state.offers = state.offers.filter((card) => card.city.name === state.currentCity);
+      state.currentNameOfCity = String(action.payload);
+      state.offersByName = state.offers.filter((card) => card.city.name === state.currentNameOfCity);
     });
 });
 

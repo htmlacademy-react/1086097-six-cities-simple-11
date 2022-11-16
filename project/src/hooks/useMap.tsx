@@ -4,12 +4,13 @@ import leaflet from 'leaflet';
 import { useEffect, useState, MutableRefObject, useRef } from 'react';
 import {TILE_LAYER, TILE_LAYER_ATTRIBUTION} from '../const';
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: TCity): Map | null {
+function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: TCity | undefined): Map | null {
   const [map, setMap] = useState<Map | null>(null);
+
   const isRenderedRef = useRef(false);
 
   useEffect(() => {
-    if (mapRef.current && !isRenderedRef.current) {
+    if (mapRef.current && !isRenderedRef.current && city) {
       const instance = leaflet.map(mapRef.current, {
         center: {
           lat: Number(city.location.latitude),

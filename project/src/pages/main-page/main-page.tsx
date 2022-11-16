@@ -2,27 +2,27 @@ import PlaceList from '../../components/place-list/place-list';
 import CitysList from '../../components/citys-list/citys-list';
 import Logo from '../../components/logo/logo';
 import {Link} from 'react-router-dom';
-import {TOfferCard, TCitys} from '../../types';
+import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
 import Map from '../../components/map/map';
 // import {citys} from '../../mocks/citys';
 import {useState} from 'react';
 
-import useAppDispatch from '../../hooks/useAppDispatch';
-import useAppSelector from '../../hooks/useAppSelector';
-import {сityСhange} from '../../store/action';
+// import useAppDispatch from '../../hooks/useAppDispatch';
+// import useAppSelector from '../../hooks/useAppSelector';
+// import {сityСhange} from '../../store/action';
 
 type MainPageProps = {
   amountCards: number;
   cards: TOfferCard[];
-  citys: TCitys;
 }
 
-export default function MainPage({amountCards, cards, citys}: MainPageProps): JSX.Element {
+export default function MainPage({amountCards, cards}: MainPageProps): JSX.Element {
 
   const [selectedCard, setSelectedCard] = useState<TOfferCard | undefined>();
 
   const onListCardHover = (cardId:number | undefined) => {
+
     const currentCard = cards.find((card) => card.id === cardId);
     setSelectedCard(currentCard);
   };
@@ -61,7 +61,7 @@ export default function MainPage({amountCards, cards, citys}: MainPageProps): JS
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <CitysList citys={citys} />
+            <CitysList />
           </section>
         </div>
         <div className="cities">
@@ -87,7 +87,7 @@ export default function MainPage({amountCards, cards, citys}: MainPageProps): JS
               <PlaceList cards={cards} onListCardHover={onListCardHover} />
             </section>
             <div className="cities__right-section">
-              <Map city={citys[0]} cards={cards} selectedPoint={selectedCard} />
+              <Map selectedPoint={selectedCard} />
             </div>
           </div>
         </div>
