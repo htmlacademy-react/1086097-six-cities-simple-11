@@ -41,5 +41,3 @@ export type TPoint = {
   latitude: number;
   longitude: number;
 };
-
-export type TPoints = TPoint[];

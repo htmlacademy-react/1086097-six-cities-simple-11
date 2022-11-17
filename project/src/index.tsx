@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import {arrayOfCards} from './mocks/offers';
+import {Provider} from 'react-redux';
+import {store} from './store';
 
-const Setting = {
-  amountCards: 312,
-} as const;
+// const Setting = {
+//   amountCards: 312,
+// } as const;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -13,8 +14,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      amountCards={Setting.amountCards} cards={arrayOfCards}
-    />
+    <Provider store = {store}>
+      {/* <App amountCards={Setting.amountCards} cards={store.getState().offers} citys={citys}/> */}
+      <App />
+    </Provider>
   </React.StrictMode>,
 );

@@ -1,8 +1,9 @@
 
-import { TOfferCard, TCity} from '../../types';
+import {TOfferCard} from '../../types';
 import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/useMap';
 // import { useState } from 'react';
+import {useAppSelector} from '../../hooks/useAppSelector';
 import {mapIconUrl} from '../../const';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -12,28 +13,32 @@ import 'leaflet/dist/leaflet.css';
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
 
 type MapProps = {
-  city: TCity;
-  cards: TOfferCard[];
-  selectedPoint: TOfferCard | undefined;
+  selectedCard: TOfferCard | undefined;
+  outCard: TOfferCard | undefined;
 }
 
-export default function Map({city, cards, selectedPoint}: MapProps): JSX.Element {
+export default function Map({selectedCard, outCard}: MapProps): JSX.Element {
+  const currentNameOfCity = useAppSelector((state) => state.currentNameOfCity);
+  const citys = useAppSelector((state) => state.citys);
+  const currentCity = citys.find((city) => city.name === currentNameOfCity);
+  const cards = useAppSelector((state) => state.offersByName);
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, currentCity);
+
+  const defaultCustomIcon = leaflet.icon({
+    iconUrl: mapIconUrl.url,
+    iconSize: [27, 39],
+    iconAnchor: [27, 40],
+  });
+
+  const currentCustomIcon = leaflet.icon({
+    iconUrl: mapIconUrl.urlActive,
+    iconSize: [27, 39],
+    iconAnchor: [27, 40],
+  });
 
   useEffect(() => {
-    const defaultCustomIcon = leaflet.icon({
-      iconUrl: mapIconUrl.url,
-      iconSize: [27, 39],
-      iconAnchor: [27, 40],
-    });
-
-    const currentCustomIcon = leaflet.icon({
-      iconUrl: mapIconUrl.urlActive,
-      iconSize: [27, 39],
-      iconAnchor: [27, 40],
-    });
-
     if (map) {
       cards.forEach((card) => {
         leaflet
@@ -41,14 +46,13 @@ export default function Map({city, cards, selectedPoint}: MapProps): JSX.Element
             lat: card.point.latitude,
             lng: card.point.longitude,
           }, {
-            icon: (selectedPoint && card.id === selectedPoint.id)
-              ? currentCustomIcon
-              : defaultCustomIcon,
+            icon: selectedCard && card.id === selectedCard.id ? currentCustomIcon : defaultCustomIcon,
           })
           .addTo(map);
+        map.flyTo({lat: card.city.location.latitude, lng: card.city.location.longitude});
       });
     }
-  }, [map, cards, selectedPoint]);
+  }, [map, cards, selectedCard, currentCity, defaultCustomIcon, currentCustomIcon]);
 
   return <section className="cities__map map" ref={mapRef}></section>;
 }
