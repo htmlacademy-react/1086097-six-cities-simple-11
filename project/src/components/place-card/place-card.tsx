@@ -5,21 +5,25 @@ import Premium from '../premium/premium';
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
 
-type PlaceCardProps = {card:TOfferCard} & {classCard:string} &{onCardHover: (id:number) => void}
+type PlaceCardProps = {card:TOfferCard} & {classCard:string} & {onCardHover: (id:number) => void} & {onCardOut: (id:number) => void}
 // type PlaceCardProps = TOfferCard & {onCardHover: (id:number) => void}
 
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
-export default function PlaceCard({card, classCard, onCardHover}:PlaceCardProps): JSX.Element {
+export default function PlaceCard({card, classCard, onCardHover, onCardOut}:PlaceCardProps): JSX.Element {
   const {isPremium, img, price, rating, title, type, id} = card;
 
-  const handleCardMouseOver = () => {
+  const handleCardMouseMove = () => {
     onCardHover(id);
+  };
+
+  const handleCardMouseOut = () => {
+    onCardOut(id);
   };
 
   const selectedClassCard = classCard;
 
   return (
-    <article className={`${selectedClassCard}__card place-card`} onMouseMove={handleCardMouseOver}>
+    <article className={`${selectedClassCard}__card place-card`} onMouseMove={handleCardMouseMove} onMouseOut={handleCardMouseOut}>
       {isPremium ? <Premium /> : null}
       <div className={`${selectedClassCard}__image-wrapper place-card__image-wrapper`}>
         <Link to="#header">

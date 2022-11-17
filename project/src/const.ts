@@ -19,6 +19,7 @@ export enum ClassForCardAndList {
 }
 
 export const ratingLevels:string[] = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
+export const defaultCity = 'Paris';
 
 export const mapIconUrl = {
   url: 'img/pin.svg',

@@ -4,9 +4,9 @@ import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './store';
 
-const Setting = {
-  amountCards: 312,
-} as const;
+// const Setting = {
+//   amountCards: 312,
+// } as const;
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -16,7 +16,7 @@ root.render(
   <React.StrictMode>
     <Provider store = {store}>
       {/* <App amountCards={Setting.amountCards} cards={store.getState().offers} citys={citys}/> */}
-      <App amountCards={Setting.amountCards} />
+      <App />
     </Provider>
   </React.StrictMode>,
 );

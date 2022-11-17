@@ -22,6 +22,11 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
     /* eslint-disable */ console.log(currentCard);
   };
 
+  const onListCardOut = (cardId:number | undefined) => {
+    const currentCard = cards.find((card) => card.id === 2);
+    /* eslint-disable */ console.log(currentCard);
+  };
+
   const currentCard: TOfferCard | undefined = cards.find((card) => card.id === Number(params.id));
 
   return currentCard ? (
@@ -183,7 +188,7 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <NearPlacesList cards={cards} onListCardHover={onListCardHover} />
+              <NearPlacesList cards={cards} onListCardHover={onListCardHover} onListCardOut={onListCardOut} />
             </div>
           </section>
         </div>
