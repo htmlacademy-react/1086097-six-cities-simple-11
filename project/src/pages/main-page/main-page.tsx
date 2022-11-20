@@ -6,6 +6,10 @@ import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
 import Map from '../../components/map/map';
 import {useState, useRef} from 'react';
+import {changeSortType} from '../../store/action';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {SortTypes, SortTitle} from '../../const';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
 type MainPageProps = {
   cards: TOfferCard[];
@@ -13,8 +17,9 @@ type MainPageProps = {
 
 export default function MainPage({cards}: MainPageProps): JSX.Element {
 
-  const sortFormRef = useRef<HTMLFormElement>(null);
-  const sortButtonRef = useRef<HTMLSpanElement>(null);
+  const typeOfSort = useAppSelector((state) => state.sortType);
+  const dispatch = useAppDispatch();
+
   const sortListRef = useRef<HTMLUListElement>(null);
 
   const [selectedCard, setSelectedCard] = useState<TOfferCard | undefined>();
@@ -36,39 +41,26 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
     sortListRef.current?.classList.toggle('places__options--opened');
   };
 
+  // const target = evt.target as HTMLElement;
 
-  const sortByPopular = (offers: TOfferCard) => Number(offers);
-  const sortLowToHigh = (offerA:TOfferCard, offerB:TOfferCard) => offerA.price - offerB.price;
-  const sortHighToLow = (offerA:TOfferCard, offerB:TOfferCard) => offerA.price - offerB.price;
-  const sortTopRatedFirst = (offerA:TOfferCard, offerB:TOfferCard) => Number(offerB.rating) - Number(offerA.rating);
-
-  const sortOffersByType = (sortType: string, offers: TOfferCard[]) => {
-    switch(sortType) {
-      case 'popular':
-        return cards.sort(sortByPopular);
-      case 'lowToHigh':
-        return cards.sort(sortLowToHigh);
-      case 'highToLow':
-        return cards.sort(sortHighToLow);
-      case 'topRatedFirst':
-        return cards.sort(sortTopRatedFirst);
-    }
+  const handleSortPopularItemClick = () => {
+    dispatch(changeSortType(SortTypes.Popular));
+    sortListRef.current?.classList.toggle('places__options--opened');
   };
 
-  const handleFormChange = (evt:React.MouseEvent<HTMLFormElement | string | null>) => {
-    const target = evt.target as HTMLElement;
+  const handleSortLowToHighItemClick = () => {
+    dispatch(changeSortType(SortTypes.LowToHigh));
+    sortListRef.current?.classList.toggle('places__options--opened');
+  };
 
-    if (sortButtonRef.current) {
-      if (target.tagName !== 'LI') {return;}
+  const handleSortHighToLowItemClick = () => {
+    dispatch(changeSortType(SortTypes.HighToLow));
+    sortListRef.current?.classList.toggle('places__options--opened');
+  };
 
-      sortListRef.current?.classList.toggle('places__options--opened');
-      sortButtonRef.current.textContent = String(target.textContent);
-
-      if (target.dataset.sort) {
-        /* eslint-disable */console.log(sortOffersByType(target.dataset.sort, cards));
-        /* eslint-disable */console.log(typeof target.dataset.sort);
-      }
-    }
+  const handleSortTopRatedFirstItemClick = () => {
+    dispatch(changeSortType(SortTypes.TopRatedFirst));
+    sortListRef.current?.classList.toggle('places__options--opened');
   };
 
   return (
@@ -115,21 +107,19 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
               <b className="places__found">{amountOfCards} {amountOfCards > 1 ? 'places' : 'place'} to stay in Amsterdam</b>
 
 
-              <form className="places__sorting" action="#" method="get" onClick={handleFormChange} ref={sortFormRef}>
+              <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by </span>
-                <span className="places__sorting-type" tabIndex={1} ref={sortButtonRef} onClick={handleSortButtonClick}>
-                  Popular
+                <span className="places__sorting-type" tabIndex={1} onClick={handleSortButtonClick}>
+                  {SortTitle[typeOfSort as keyof typeof SortTitle]}
                   <svg className="places__sorting-arrow" width="7" height="4">
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-
-
                 <ul className="places__options places__options--custom" ref={sortListRef}>
-                  <li className="places__option" data-sort="popular" tabIndex={2}>Popular</li>
-                  <li className="places__option" data-sort="lowToHigh" tabIndex={3}>Price: low to high</li>
-                  <li className="places__option" data-sort="highToLow" tabIndex={4}>Price: high to low</li>
-                  <li className="places__option" data-sort="topRatedFirst" tabIndex={5}>Top rated first</li>
+                  <li className={`places__option ${typeOfSort === SortTypes.Popular ? 'places__option--active' : ''}`} tabIndex={2} onClick={handleSortPopularItemClick}>Popular</li>
+                  <li className={`places__option ${typeOfSort === SortTypes.LowToHigh ? 'places__option--active' : ''}`} tabIndex={3} onClick={handleSortLowToHighItemClick}>Price: low to high</li>
+                  <li className={`places__option ${typeOfSort === SortTypes.HighToLow ? 'places__option--active' : ''}`} tabIndex={4} onClick={handleSortHighToLowItemClick}>Price: high to low</li>
+                  <li className={`places__option ${typeOfSort === SortTypes.TopRatedFirst ? 'places__option--active' : ''}`} tabIndex={5} onClick={handleSortTopRatedFirstItemClick}>Top rated first</li>
                 </ul>
               </form>
               <PlaceList cards={cards} onListCardHover={onListCardHover} onListCardOut={onListCardOut}/>

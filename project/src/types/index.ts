@@ -41,3 +41,5 @@ export type TPoint = {
   latitude: number;
   longitude: number;
 };
+
+export type TSort = string;

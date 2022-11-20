@@ -1,7 +1,6 @@
 import { TOfferCard } from '../../types';
 import PlaceCard from '../place-card/place-card';
 import React, { useState } from 'react';
-// import {arrayOfCards} from '../../mocks/offers';
 
 type ListProps = {
   classOfList: string;
