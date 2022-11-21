@@ -1,7 +1,8 @@
 import City from '../city/city';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {changeCity} from '../../store/action';
+import {changeCity, changeSortType} from '../../store/action';
+import {SortTypes} from '../../const';
 
 export default function CitysList(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -9,6 +10,7 @@ export default function CitysList(): JSX.Element {
 
   const handleLinkClick = (name: string) => {
     dispatch(changeCity(name));
+    dispatch(changeSortType(SortTypes.Popular));
   };
 
   return (

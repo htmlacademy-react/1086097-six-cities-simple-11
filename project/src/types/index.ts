@@ -1,8 +1,8 @@
 export type TOfferCard = {
   isPremium: boolean;
   img: string;
-  price: string;
-  rating: string;
+  price: number;
+  rating: number;
   title: string;
   type: string;
   id: number;
@@ -41,3 +41,5 @@ export type TPoint = {
   latitude: number;
   longitude: number;
 };
+
+export type TSort = string;

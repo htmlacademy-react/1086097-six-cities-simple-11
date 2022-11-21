@@ -18,6 +18,20 @@ export enum ClassForCardAndList {
   NearPlacesList = 'near-places__list'
 }
 
+export enum SortTypes {
+  Popular = 'Popular',
+  LowToHigh = 'LowToHigh',
+  HighToLow = 'HighToLow',
+  TopRatedFirst = 'TopRatedFirst'
+}
+
+export const SortTitle = {
+  'Popular': 'Popular',
+  'LowToHigh': 'Price: low to high',
+  'HighToLow': 'Price: high to low',
+  'TopRatedFirst': 'Top rated first'
+};
+
 export const ratingLevels:string[] = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 export const defaultCity = 'Paris';
 
