@@ -1,26 +1,34 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {gettingOffers, changeCity, changeSortType} from './action';
-import {arrayOfCards} from '../mocks/offers';
+import {gettingOffers, changeCity, changeSortType, settingLoadingStatus} from './action';
+
+// import {arrayOfCards} from '../mocks/offers';
+
+import {InitalState} from '../types';
 import {citys} from '../mocks/citys';
-import {defaultCity, SortTypes} from '../const';
+import {DEFAULT_CITY, SortTypes} from '../const';
 import {sortByPopular, sortFromLowToHigh, sortFromHighToLow, sortTopRatedFirst} from '../utils';
 
-const initialState = {
+const initialState: InitalState = {
   citys: citys,
-  currentNameOfCity: defaultCity,
-  offers: arrayOfCards,
-  offersByName: arrayOfCards.filter((card) => card.city.name === defaultCity),
+  currentNameOfCity: DEFAULT_CITY,
+  offers: [],
+  offersByName: [],
   sortType: 'Popular',
+  isLoadingOffers: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(gettingOffers, (state, action) => {
       state.offers = action.payload;
+      state.offersByName = state.offers.filter((offer) => offer.city.name === state.currentNameOfCity);
+    })
+    .addCase(settingLoadingStatus, (state, action) => {
+      state.isLoadingOffers = action.payload;
     })
     .addCase(changeCity, (state, action) => {
-      state.currentNameOfCity = String(action.payload);
-      state.offersByName = state.offers.filter((card) => card.city.name === state.currentNameOfCity);
+      state.currentNameOfCity = action.payload;
+      state.offersByName = state.offers.filter((offer) => offer.city.name === state.currentNameOfCity);
       state.sortType = SortTypes.Popular;
     })
     .addCase(changeSortType, (state, action) => {

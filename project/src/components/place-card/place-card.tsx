@@ -10,7 +10,8 @@ type PlaceCardProps = {card:TOfferCard} & {classCard:string} & {onCardHover: (id
 
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
 export default function PlaceCard({card, classCard, onCardHover, onCardOut}:PlaceCardProps): JSX.Element {
-  const {isPremium, img, price, rating, title, type, id} = card;
+
+  const {isPremium, price, rating, title, type, id, previewImage} = card;
 
   const handleCardMouseMove = () => {
     onCardHover(id);
@@ -27,7 +28,7 @@ export default function PlaceCard({card, classCard, onCardHover, onCardOut}:Plac
       {isPremium ? <Premium /> : null}
       <div className={`${selectedClassCard}__image-wrapper place-card__image-wrapper`}>
         <Link to="#header">
-          <img className="place-card__image" src={`img/${img}.jpg`} width="260" height="200" alt="Place" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place" />
         </Link>
       </div>
       <div className="place-card__info">

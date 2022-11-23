@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './store';
+import {fetchOffersAction} from './store/api-action';
 
-// const Setting = {
-//   amountCards: 312,
-// } as const;
+store.dispatch(fetchOffersAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
