@@ -6,21 +6,26 @@ import {Link} from 'react-router-dom';
 import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
 import Map from '../../components/map/map';
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {changeSortType} from '../../store/action';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {SortTypes, SortTitle} from '../../const';
 import {useAppSelector} from '../../hooks/useAppSelector';
+import {fetchOffersAction} from '../../store/api-action';
 
 type MainPageProps = {
   cards: TOfferCard[];
 }
 
 export default function MainPage({cards}: MainPageProps): JSX.Element {
-  const isLoadind = useAppSelector((state) => state.isLoadingOffers);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, );
+
+  const isLoading = useAppSelector((state) => state.isLoadingOffers);
   const typeOfSort = useAppSelector((state) => state.sortType);
   const currentCity = useAppSelector((state) => state.currentNameOfCity);
-  const dispatch = useAppDispatch();
 
   const sortListRef = useRef<HTMLUListElement>(null);
 
@@ -95,7 +100,7 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
         </div>
       </header>
 
-      { isLoadind ?
+      { isLoading ?
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">

@@ -1,5 +1,5 @@
 // import {createAction} from '@reduxjs/toolkit';
-import { TOfferCard } from '../types';
+import {TOfferCard} from '../types';
 import {APIRoute} from '../const';
 
 import {AxiosInstance} from 'axios';
