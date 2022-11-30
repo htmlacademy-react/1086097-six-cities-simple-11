@@ -64,7 +64,7 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               <div className="property__image-wrapper">
-                <img className="property__image" src={`img/${currentCard.img}.jpg`} alt="studio" />
+                <img className="property__image" src={`${currentCard.images[0]}`} alt="studio" />
               </div>
               <div className="property__image-wrapper">
                 <img className="property__image" src="img/apartment-01.jpg" alt="studio" />

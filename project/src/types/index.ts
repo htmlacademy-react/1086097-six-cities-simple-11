@@ -1,17 +1,33 @@
 export type TOfferCard = {
+  bedrooms: number;
+  goods: string[];
+  description: string;
   isPremium: boolean;
-  img: string;
+  images: string[];
+  mainImage: string;
+  previewImage: string;
+  maxAdults: number;
   price: number;
   rating: number;
   title: string;
   type: string;
   id: number;
-  point:{
-    title: string;
+  location:{
+    zomm: number;
     latitude: number;
     longitude: number;
   };
   city: TCity;
+  host: THost;
+};
+
+export type THost = {
+  host: {
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
 };
 
 export type TComment = {
@@ -43,3 +59,13 @@ export type TPoint = {
 };
 
 export type TSort = string;
+
+export type InitalState = {
+  citys: TCity[];
+  currentNameOfCity: string;
+  offers: TOfferCard[];
+  offersByName: TOfferCard[];
+  sortType: string;
+  isLoadingOffers: boolean;
+  authorizationStatus: string;
+}

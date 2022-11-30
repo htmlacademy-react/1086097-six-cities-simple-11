@@ -4,10 +4,6 @@ import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './store';
 
-// const Setting = {
-//   amountCards: 312,
-// } as const;
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );

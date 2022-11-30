@@ -10,6 +10,7 @@ import {HelmetProvider} from 'react-helmet-async';
 import {useAppSelector} from '../../hooks/useAppSelector';
 
 function App(): JSX.Element {
+
   const cards = useAppSelector((state) => state.offersByName);
 
   return (

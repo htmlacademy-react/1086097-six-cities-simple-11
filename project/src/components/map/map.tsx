@@ -40,11 +40,11 @@ export default function Map({selectedCard, outCard}: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      cards.forEach((card) => {
+      cards.forEach((card:TOfferCard) => {
         leaflet
           .marker({
-            lat: card.point.latitude,
-            lng: card.point.longitude,
+            lat: Number(card.location.latitude),
+            lng: Number(card.location.longitude),
           }, {
             icon: selectedCard && card.id === selectedCard.id ? currentCustomIcon : defaultCustomIcon,
           })

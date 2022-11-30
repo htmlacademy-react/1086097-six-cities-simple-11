@@ -15,14 +15,14 @@ export enum ClassForCardAndList {
   Cities = 'cities',
   NearPlaces = 'near-places',
   CitiesList = 'cities__places-list tabs__content',
-  NearPlacesList = 'near-places__list'
+  NearPlacesList = 'near-places__list',
 }
 
 export enum SortTypes {
   Popular = 'Popular',
   LowToHigh = 'LowToHigh',
   HighToLow = 'HighToLow',
-  TopRatedFirst = 'TopRatedFirst'
+  TopRatedFirst = 'TopRatedFirst',
 }
 
 export const SortTitle = {
@@ -33,7 +33,8 @@ export const SortTitle = {
 };
 
 export const ratingLevels:string[] = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
-export const defaultCity = 'Paris';
+
+export const DEFAULT_CITY = 'Paris';
 
 export const mapIconUrl = {
   url: 'img/pin.svg',
@@ -42,3 +43,12 @@ export const mapIconUrl = {
 
 export const TILE_LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 export const TILE_LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
+export const REQUEST_TIMEOUT = 5000;
