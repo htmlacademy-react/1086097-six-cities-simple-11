@@ -1,5 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {gettingOffers, changeCity, changeSortType, settingLoadingStatus} from './action';
+import {gettingOffers, changeCity, changeSortType, settingLoadingStatus, requireAuthorization} from './action';
+import {AuthorizationStatus} from '../const';
 
 // import {arrayOfCards} from '../mocks/offers';
 
@@ -15,6 +16,7 @@ const initialState: InitalState = {
   offersByName: [],
   sortType: 'Popular',
   isLoadingOffers: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -30,6 +32,9 @@ const reducer = createReducer(initialState, (builder) => {
       state.currentNameOfCity = action.payload;
       state.offersByName = state.offers.filter((offer) => offer.city.name === state.currentNameOfCity);
       state.sortType = SortTypes.Popular;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     })
     .addCase(changeSortType, (state, action) => {
 

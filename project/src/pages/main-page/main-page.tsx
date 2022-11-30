@@ -21,7 +21,7 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchOffersAction());
-  }, );
+  },[dispatch]);
 
   const isLoading = useAppSelector((state) => state.isLoadingOffers);
   const typeOfSort = useAppSelector((state) => state.sortType);

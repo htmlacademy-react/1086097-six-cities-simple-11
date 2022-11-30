@@ -67,4 +67,5 @@ export type InitalState = {
   offersByName: TOfferCard[];
   sortType: string;
   isLoadingOffers: boolean;
+  authorizationStatus: string;
 }
