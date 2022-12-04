@@ -2,7 +2,7 @@ import PlaceList from '../../components/place-list/place-list';
 import CitysList from '../../components/citys-list/citys-list';
 import Loading from '../../components/loading/loading';
 import Logo from '../../components/logo/logo';
-import {Link} from 'react-router-dom';
+import HeaderNavList from '../../components/header-nav-list/header-nav-list';
 import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
 import Map from '../../components/map/map';
@@ -12,6 +12,8 @@ import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {SortTypes, SortTitle} from '../../const';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {fetchOffersAction} from '../../store/api-action';
+import {checkAuthAction} from '../../store/api-action';
+
 
 type MainPageProps = {
   cards: TOfferCard[];
@@ -19,13 +21,12 @@ type MainPageProps = {
 
 export default function MainPage({cards}: MainPageProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const {isLoadingOffers, sortType, currentNameOfCity} = useAppSelector((state) => state);
+
   useEffect(() => {
     dispatch(fetchOffersAction());
+    dispatch(checkAuthAction());
   },[dispatch]);
-
-  const isLoading = useAppSelector((state) => state.isLoadingOffers);
-  const typeOfSort = useAppSelector((state) => state.sortType);
-  const currentCity = useAppSelector((state) => state.currentNameOfCity);
 
   const sortListRef = useRef<HTMLUListElement>(null);
 
@@ -47,8 +48,6 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
   const handleSortButtonClick = () => {
     sortListRef.current?.classList.toggle('places__options--opened');
   };
-
-  // const target = evt.target as HTMLElement;
 
   const handleSortPopularItemClick = () => {
     dispatch(changeSortType(SortTypes.Popular));
@@ -82,25 +81,13 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
               <Logo />
             </div>
             <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to="/">
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
+              <HeaderNavList />
             </nav>
           </div>
         </div>
       </header>
 
-      { isLoading ?
+      { isLoadingOffers ?
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
@@ -112,22 +99,23 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{amountOfCards} {amountOfCards > 1 ? 'places' : 'place'} to stay in {currentCity}</b>
+                <b className="places__found">{amountOfCards} {amountOfCards > 1 ? 'places' : 'place'} to stay in {currentNameOfCity}</b>
 
 
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by </span>
                   <span className="places__sorting-type" tabIndex={1} onClick={handleSortButtonClick}>
-                    {SortTitle[typeOfSort as keyof typeof SortTitle]}
+                    {SortTitle[sortType as keyof typeof SortTitle]}
                     <svg className="places__sorting-arrow" width="7" height="4">
                       <use xlinkHref="#icon-arrow-select"></use>
                     </svg>
                   </span>
                   <ul className="places__options places__options--custom" ref={sortListRef}>
-                    <li className={`places__option ${typeOfSort === SortTypes.Popular ? 'places__option--active' : ''}`} tabIndex={2} onClick={handleSortPopularItemClick}>Popular</li>
-                    <li className={`places__option ${typeOfSort === SortTypes.LowToHigh ? 'places__option--active' : ''}`} tabIndex={3} onClick={handleSortLowToHighItemClick}>Price: low to high</li>
-                    <li className={`places__option ${typeOfSort === SortTypes.HighToLow ? 'places__option--active' : ''}`} tabIndex={4} onClick={handleSortHighToLowItemClick}>Price: high to low</li>
-                    <li className={`places__option ${typeOfSort === SortTypes.TopRatedFirst ? 'places__option--active' : ''}`} tabIndex={5} onClick={handleSortTopRatedFirstItemClick}>Top rated first</li>
+                    {/* Глеб, я помню, не успел из этого компонентик сделать ) */}
+                    <li className={`places__option ${sortType === SortTypes.Popular ? 'places__option--active' : ''}`} tabIndex={2} onClick={handleSortPopularItemClick}>Popular</li>
+                    <li className={`places__option ${sortType === SortTypes.LowToHigh ? 'places__option--active' : ''}`} tabIndex={3} onClick={handleSortLowToHighItemClick}>Price: low to high</li>
+                    <li className={`places__option ${sortType === SortTypes.HighToLow ? 'places__option--active' : ''}`} tabIndex={4} onClick={handleSortHighToLowItemClick}>Price: high to low</li>
+                    <li className={`places__option ${sortType === SortTypes.TopRatedFirst ? 'places__option--active' : ''}`} tabIndex={5} onClick={handleSortTopRatedFirstItemClick}>Top rated first</li>
                   </ul>
                 </form>
                 <PlaceList cards={cards} onListCardHover={onListCardHover} onListCardOut={onListCardOut}/>

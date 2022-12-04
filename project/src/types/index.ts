@@ -68,4 +68,19 @@ export type InitalState = {
   sortType: string;
   isLoadingOffers: boolean;
   authorizationStatus: string;
+  error: string | null;
+  user: UserData | null;
 }
+
+export type Token = string;
+
+export type AuthData = {
+  login: string;
+  password: string;
+};
+
+export type UserData = {
+  id: number;
+  email: string;
+  token: string;
+};
