@@ -1,6 +1,6 @@
 import Logo from '../../components/logo/logo';
 import NearPlacesList from '../../components/near-places-list/near-places-list';
-import {Link} from 'react-router-dom';
+import HeaderNavList from '../../components/header-nav-list/header-nav-list';
 import {Helmet} from 'react-helmet-async';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
@@ -18,13 +18,12 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
   const commentsAmount = arrayOfComments.length;
 
   const onListCardHover = (cardId:number | undefined) => {
-    const currentCard = cards.find((card) => card.id === 2);
+    const currentCard = cards.find((card) => card.id === cardId);
     /* eslint-disable */ console.log(currentCard);
   };
 
   const onListCardOut = (cardId:number | undefined) => {
     const currentCard = cards.find((card) => card.id === 2);
-    /* eslint-disable */ console.log(currentCard);
   };
 
   const currentCard: TOfferCard | undefined = cards.find((card) => card.id === Number(params.id));
@@ -42,17 +41,7 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to="#header">
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
+                <HeaderNavList />
               </ul>
             </nav>
           </div>
