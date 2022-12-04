@@ -46,6 +46,7 @@ export const TILE_LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap
 
 export enum APIRoute {
   Offers = '/hotels',
+  Comments = '/comments',
   Login = '/login',
   Logout = '/logout',
 }

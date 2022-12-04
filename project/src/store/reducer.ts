@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {gettingOffers, changeCity, changeSortType, settingLoadingStatus, requireAuthorization, setError, settingUser, userLogout} from './action';
+import {gettingOffers, changeCity, changeSortType, settingLoadingStatus, requireAuthorization, setError, settingUser, userLogout, gettingComments} from './action';
 import {AuthorizationStatus} from '../const';
 
 import {InitalState} from '../types';
@@ -17,6 +17,7 @@ const initialState: InitalState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   user: null,
+  comments: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -24,6 +25,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(gettingOffers, (state, action) => {
       state.offers = action.payload;
       state.offersByName = state.offers.filter((offer) => offer.city.name === state.currentNameOfCity);
+    })
+    .addCase(gettingComments, (state, action) => {
+      state.comments = action.payload;
     })
     .addCase(settingLoadingStatus, (state, action) => {
       state.isLoadingOffers = action.payload;

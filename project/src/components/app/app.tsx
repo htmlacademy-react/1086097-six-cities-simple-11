@@ -13,17 +13,14 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-
-  const cards = useAppSelector((state) => state.offersByName);
+  const {offersByName} = useAppSelector((state) => state);
 
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route index element={<MainPage cards={cards} />} />
-          {/* <Route path={AppRoute.Root} element={<MainPage amountCards={amountCards} cards={cards}/>} /> */}
-
-          <Route path={`${AppRoute.Room}/:id`} element={<RoomPage cards={cards} />} />
+          <Route index element={<MainPage cards={offersByName} />} />
+          <Route path={`${AppRoute.Room}/:id`} element={<RoomPage cards={offersByName} />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
           {/* <Route path={AppRoute.Room} element={<PrivateRoute authorizationStatus={AuthorizationStatus.Auth}><RoomPage /></PrivateRoute>} /> */}

@@ -1,5 +1,5 @@
 // import {createAction} from '@reduxjs/toolkit';
-import {TOfferCard, UserData, AuthData} from '../types';
+import {TOfferCard, UserData, AuthData, TComment, THotelId} from '../types';
 import {APIRoute, AuthorizationStatus, AppRoute} from '../const';
 import {saveToken, dropToken} from '../services/token';
 
@@ -8,7 +8,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {store} from './';
 
-import {gettingOffers, changeCity, settingLoadingStatus, requireAuthorization, settingUser, redirectToRoute, setError} from './action';
+import {gettingOffers, gettingComments, changeCity, settingLoadingStatus, requireAuthorization, settingUser, redirectToRoute, setError} from './action';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
@@ -18,6 +18,14 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {dispatch: Ap
     dispatch(gettingOffers(data));
     dispatch(changeCity);
     dispatch(settingLoadingStatus(true));
+  },
+);
+
+export const fetchCommentsAction = createAsyncThunk<void, THotelId, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
+  'comments/gettingComments',
+  async (hotelId, {dispatch, extra: api}) => {
+    const {data} = await api.get<TComment[]>(`${APIRoute.Comments}/${hotelId}`);
+    dispatch(gettingComments(data));
   },
 );
 

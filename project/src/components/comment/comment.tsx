@@ -5,6 +5,7 @@ type CommentProps = {currentComment:TComment}
 export default function Comment({currentComment}:CommentProps): JSX.Element {
   const {user, rating, comment, date} = currentComment;
   const {avatarUrl, name} = user;
+  const getStars = (ratingComment: number) => Math.round(ratingComment * 20);
 
   return (
     <li className="reviews__item">
@@ -19,7 +20,7 @@ export default function Comment({currentComment}:CommentProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${rating}%`}}></span>
+            <span style={{width: `${getStars(rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

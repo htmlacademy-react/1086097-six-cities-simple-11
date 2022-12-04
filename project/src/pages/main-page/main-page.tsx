@@ -14,7 +14,6 @@ import {useAppSelector} from '../../hooks/useAppSelector';
 import {fetchOffersAction} from '../../store/api-action';
 import {checkAuthAction} from '../../store/api-action';
 
-
 type MainPageProps = {
   cards: TOfferCard[];
 }

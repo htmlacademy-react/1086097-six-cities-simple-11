@@ -7,7 +7,8 @@ import CommentList from '../../components/comment-list/comment-list';
 import { TOfferCard} from '../../types';
 import NotFound from '../../pages/not-found/not-found';
 import { useParams } from 'react-router-dom';
-import {arrayOfComments} from '../../mocks/comments';
+// import {arrayOfComments} from '../../mocks/comments';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
 type RoomPageProps = {
   cards: TOfferCard[];
@@ -15,7 +16,8 @@ type RoomPageProps = {
 
 export default function RoomPage({cards}:RoomPageProps): JSX.Element {
   const params = useParams();
-  const commentsAmount = arrayOfComments.length;
+  const {comments} = useAppSelector((state) => state);
+  const commentsAmount = comments.length;
 
   const onListCardHover = (cardId:number | undefined) => {
     const currentCard = cards.find((card) => card.id === cardId);
@@ -27,6 +29,8 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
   };
 
   const currentCard: TOfferCard | undefined = cards.find((card) => card.id === Number(params.id));
+
+  const getStars = (offer: TOfferCard) => Math.round(offer.rating * 20);
 
   return currentCard ? (
     <div className="page">
@@ -81,26 +85,24 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {currentCard.title}
-                  {/* Beautiful &amp; luxurious studio at great location */}
                 </h1>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: currentCard.rating}}></span>
+                  <span style={{width: `${getStars(currentCard)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{currentCard.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   {currentCard.type}
-                  {/* Apartment */}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {`${currentCard.bedrooms} Bedrooms`?? ''}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {currentCard.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
@@ -110,50 +112,21 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
+                  {currentCard ?  currentCard.goods.map((good) =>
+                    <li key={good} className="property__inside-item">{good}</li>
+                  ) : ''}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={currentCard.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {currentCard.host.name}
                   </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
+                  { currentCard.host.isPro ? <span className="property__user-status"> Pro </span> : null}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
@@ -166,7 +139,7 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsAmount}</span></h2>
-                {<CommentList allComments={arrayOfComments} />}
+                {<CommentList allComments={comments} />}
                 {<CommentForm />}
               </section>
             </div>

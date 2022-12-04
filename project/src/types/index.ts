@@ -22,12 +22,10 @@ export type TOfferCard = {
 };
 
 export type THost = {
-  host: {
-    avatarUrl: string;
-    id: number;
-    isPro: boolean;
-    name: string;
-  };
+  avatarUrl: string;
+  id: number;
+  isPro: boolean;
+  name: string;
 };
 
 export type TComment = {
@@ -59,6 +57,7 @@ export type TPoint = {
 };
 
 export type TSort = string;
+export type THotelId = number;
 
 export type InitalState = {
   citys: TCity[];
@@ -70,6 +69,7 @@ export type InitalState = {
   authorizationStatus: string;
   error: string | null;
   user: UserData | null;
+  comments: TComment[];
 }
 
 export type Token = string;
