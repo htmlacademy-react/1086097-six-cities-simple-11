@@ -6,9 +6,9 @@ import {saveToken, dropToken} from '../services/token';
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-// import {store} from './';
+import {store} from './';
 
-import {gettingOffers, changeCity, settingLoadingStatus, requireAuthorization, settingUser, redirectToRoute} from './action';
+import {gettingOffers, changeCity, settingLoadingStatus, requireAuthorization, settingUser, redirectToRoute, setError} from './action';
 
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
@@ -35,7 +35,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {dispatch: AppD
 );
 
 export const loginAction = createAsyncThunk<void, AuthData, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
-  'user/login',
+  'user/settingUser',
   async ({login: email, password}, {dispatch, extra: api}) => {
     const {data: user} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(user.token);
@@ -56,12 +56,11 @@ export const logoutAction = createAsyncThunk<void, undefined, {dispatch: AppDisp
   },
 );
 
-// export const clearErrorAction = createAsyncThunk(
-//   'page/clearError',
-//   () => {
-//     setTimeout(
-//       () => store.dispatch(setError(null)),
-//       TIMEOUT_SHOW_ERROR,
-//     );
-//   },
-// );
+export const clearErrorAction = createAsyncThunk(
+  'page/clearError',
+  () => {
+    setTimeout(() => store.dispatch(setError(null)),
+      3000,
+    );
+  },
+);

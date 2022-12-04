@@ -9,4 +9,5 @@ export const changeSortType = createAction('offers/changeSortType', (value:strin
 export const setError = createAction<string | null>('offers/setError');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const settingUser = createAction<UserData | null>('user/settingUser');
+export const userLogout = createAction<UserData | null>('user/userLogout');
 export const redirectToRoute = createAction<AppRoute>('app/redirectToRoute');

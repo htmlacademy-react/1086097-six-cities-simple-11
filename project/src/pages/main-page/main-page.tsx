@@ -12,6 +12,8 @@ import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {SortTypes, SortTitle, AuthorizationStatus, AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {fetchOffersAction, logoutAction} from '../../store/api-action';
+import {checkAuthAction} from '../../store/api-action';
+
 
 type MainPageProps = {
   cards: TOfferCard[];
@@ -20,10 +22,12 @@ type MainPageProps = {
 export default function MainPage({cards}: MainPageProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
   const user = useAppSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
+    dispatch(checkAuthAction());
   },[dispatch]);
 
   const isLoading = useAppSelector((state) => state.isLoadingOffers);
@@ -51,8 +55,6 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
     sortListRef.current?.classList.toggle('places__options--opened');
   };
 
-  // const target = evt.target as HTMLElement;
-
   const handleSortPopularItemClick = () => {
     dispatch(changeSortType(SortTypes.Popular));
     sortListRef.current?.classList.toggle('places__options--opened');
@@ -76,6 +78,7 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
 
   const handleOutAuthorizationStatusClick = () => {
     dispatch(logoutAction());
+    dispatch(checkAuthAction());
   };
 
   return (
@@ -91,20 +94,20 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    { authorizationStatus === AuthorizationStatus.Unknown || authorizationStatus === AuthorizationStatus.NoAuth ?
-                      <Link className="header__nav-link" to={`${AppRoute.Login}`}>Зарегистрироваться</Link> :
-                      <span className="header__user-name user__name">{user?.email}</span>}
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  { authorizationStatus === AuthorizationStatus.Unknown || authorizationStatus === AuthorizationStatus.NoAuth ? '' :
+                { authorizationStatus === AuthorizationStatus.Unknown || authorizationStatus === AuthorizationStatus.NoAuth ?
+                  <li className="header__nav-item user">
+                    <div className="header__nav-profile">
+                      <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                      <Link className="header__nav-link" to={`${AppRoute.Login}`}>Зарегистрироваться</Link>
+                      {/* <span className="header__user-name user__name">{user?.email }</span> */}
+                    </div>
+                  </li> :
+                  <li className="header__nav-item">
                     <Link onClick={handleOutAuthorizationStatusClick} className="header__nav-link" to={`${AppRoute.Root}`}>
-                      <span className="header__signout">Sign out</span>
-                    </Link> }
-                </li>
+                      <span className="header__user-name user__name">{user?.email}</span>
+                      <span className="header__signout">&nbsp; Sign out</span>
+                    </Link>
+                  </li>}
               </ul>
             </nav>
           </div>

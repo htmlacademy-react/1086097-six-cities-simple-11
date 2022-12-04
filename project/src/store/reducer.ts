@@ -1,8 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {gettingOffers, changeCity, changeSortType, settingLoadingStatus, requireAuthorization, setError, settingUser} from './action';
+import {gettingOffers, changeCity, changeSortType, settingLoadingStatus, requireAuthorization, setError, settingUser, userLogout} from './action';
 import {AuthorizationStatus} from '../const';
-
-// import {arrayOfCards} from '../mocks/offers';
 
 import {InitalState} from '../types';
 import {citys} from '../mocks/citys';
@@ -43,6 +41,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(settingUser, (state, action) => {
       state.user = action.payload;
+    })
+    .addCase(userLogout, (state) => {
+      state.user = null;
     })
     .addCase(changeSortType, (state, action) => {
 
