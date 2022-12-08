@@ -57,12 +57,13 @@ export type TPoint = {
 };
 
 export type TSort = string;
-export type THotelId = number;
+export type THotelId = string;
 
 export type InitalState = {
   citys: TCity[];
   currentNameOfCity: string;
   offers: TOfferCard[];
+  offersNearPlaces: TOfferCard[];
   offersByName: TOfferCard[];
   sortType: string;
   isLoadingOffers: boolean;
@@ -71,8 +72,6 @@ export type InitalState = {
   user: UserData | null;
   comments: TComment[];
 }
-
-export type Token = string;
 
 export type AuthData = {
   login: string;

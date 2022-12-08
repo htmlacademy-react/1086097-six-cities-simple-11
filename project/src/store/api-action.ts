@@ -8,8 +8,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 import {store} from './';
 
-import {gettingOffers, gettingComments, changeCity, settingLoadingStatus, requireAuthorization, settingUser, redirectToRoute, setError} from './action';
-
+import {gettingOffers, gettingComments, changeCity, settingLoadingStatus, requireAuthorization, settingUser, redirectToRoute, setError, gettingOffersNearPlaces} from './action';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
   'offers/gettingOffers',
@@ -26,6 +25,14 @@ export const fetchCommentsAction = createAsyncThunk<void, THotelId, {dispatch: A
   async (hotelId, {dispatch, extra: api}) => {
     const {data} = await api.get<TComment[]>(`${APIRoute.Comments}/${hotelId}`);
     dispatch(gettingComments(data));
+  },
+);
+
+export const fetchOffersNearPlacesAction = createAsyncThunk<void, string, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
+  'comments/gettingOffersNearPlaces',
+  async (hotelId, {dispatch, extra: api}) => {
+    const {data} = await api.get<TOfferCard[]>(`${APIRoute.Offers}/${hotelId}/nearby`);
+    dispatch(gettingOffersNearPlaces(data));
   },
 );
 

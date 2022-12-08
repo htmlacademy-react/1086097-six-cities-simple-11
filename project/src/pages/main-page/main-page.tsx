@@ -11,8 +11,7 @@ import {changeSortType} from '../../store/action';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {SortTypes, SortTitle} from '../../const';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {fetchOffersAction} from '../../store/api-action';
-import {checkAuthAction} from '../../store/api-action';
+import {checkAuthAction, fetchOffersAction} from '../../store/api-action';
 
 type MainPageProps = {
   cards: TOfferCard[];
@@ -30,18 +29,11 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
   const sortListRef = useRef<HTMLUListElement>(null);
 
   const [selectedCard, setSelectedCard] = useState<TOfferCard | undefined>();
-  const [outCard, setOutCard] = useState<TOfferCard | undefined>();
-
   const amountOfCards = cards.length ?? '';
 
   const onListCardHover = (cardId:number | undefined) => {
     const currentCard = cards.find((card) => card.id === cardId);
     setSelectedCard(currentCard);
-  };
-
-  const onListCardOut = (cardId:number | undefined) => {
-    const currentCard = cards.find((card) => card.id === cardId);
-    setOutCard(currentCard);
   };
 
   const handleSortButtonClick = () => {
@@ -117,10 +109,10 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
                     <li className={`places__option ${sortType === SortTypes.TopRatedFirst ? 'places__option--active' : ''}`} tabIndex={5} onClick={handleSortTopRatedFirstItemClick}>Top rated first</li>
                   </ul>
                 </form>
-                <PlaceList cards={cards} onListCardHover={onListCardHover} onListCardOut={onListCardOut}/>
+                <PlaceList cards={cards} onListCardHover={onListCardHover} />
               </section>
               <div className="cities__right-section">
-                <Map selectedCard={selectedCard} outCard={outCard}/>
+                <Map selectedCard={selectedCard} classMapContainer={'cities__map map'} />
               </div>
             </div>
           </div>

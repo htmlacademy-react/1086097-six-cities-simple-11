@@ -2,37 +2,29 @@
 import { TOfferCard } from '../../types';
 import Premium from '../premium/premium';
 // import { useState } from 'react';
-import {useEffect} from 'react';
-import {useAppDispatch} from '../../hooks/useAppDispatch';
-import {fetchCommentsAction} from '../../store/api-action';
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
 
-type PlaceCardProps = {card:TOfferCard} & {classCard:string} & {onCardHover: (id:number) => void} & {onCardOut: (id:number) => void}
+type PlaceCardProps = {card:TOfferCard} & {classCard:string} & {onCardHover: (id:number) => void}
 // type PlaceCardProps = TOfferCard & {onCardHover: (id:number) => void}
 
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
-export default function PlaceCard({card, classCard, onCardHover, onCardOut}:PlaceCardProps): JSX.Element {
-  const dispatch = useAppDispatch();
-  const {isPremium, price, rating, title, type, id, previewImage} = card;
+export default function PlaceCard({card, classCard, onCardHover}:PlaceCardProps): JSX.Element {
 
-  useEffect(() => {
-    dispatch(fetchCommentsAction(id));
-  },[dispatch, id]);
+  const {isPremium, price, rating, title, type, id, previewImage} = card;
 
   const handleCardMouseMove = () => {
     onCardHover(id);
   };
 
-  const handleCardMouseOut = () => {
-    onCardOut(id);
+  const handleCardTitleClick = () => {
+    onCardHover(id);
   };
-
 
   const selectedClassCard = classCard;
   const getStars = (ratingCard: number) => Math.round(ratingCard * 20);
   return (
-    <article className={`${selectedClassCard}__card place-card`} onMouseMove={handleCardMouseMove} onMouseOut={handleCardMouseOut}>
+    <article className={`${selectedClassCard}__card place-card`} onMouseMove={handleCardMouseMove}>
       {isPremium ? <Premium /> : null}
       <div className={`${selectedClassCard}__image-wrapper place-card__image-wrapper`}>
         <Link to="#header">
@@ -54,7 +46,7 @@ export default function PlaceCard({card, classCard, onCardHover, onCardOut}:Plac
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
+          <Link onClick={handleCardTitleClick} to={`${AppRoute.Room}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

@@ -7,13 +7,27 @@ export default function CommentForm(): JSX.Element {
   const [reviewText, setReview] = useState('');
   const [rating, setRating] = useState(0);
 
-  const handleTextareaChange = ():void => {
-    setReview(reviewText);
+  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>):void => {
+    setReview(event.target.value);
   };
 
   const handleInputClick = (event: React.MouseEvent<HTMLInputElement>):void => {
     setRating(Number(event.currentTarget.value));
   };
+
+  // const onSubmit = () => {
+  //   // dispatch(());
+  // };
+
+  // const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+
+  //   onSubmit({
+  //     id,
+  //     comment: reviewText,
+  //     rating: rating,
+  //   });
+  // };
 
   return (
     <form className="reviews__form form" action="#" method="post">

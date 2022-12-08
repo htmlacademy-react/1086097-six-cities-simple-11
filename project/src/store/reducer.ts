@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {gettingOffers, changeCity, changeSortType, settingLoadingStatus, requireAuthorization, setError, settingUser, userLogout, gettingComments} from './action';
+import {gettingOffers, changeCity, changeSortType, settingLoadingStatus, requireAuthorization, setError, settingUser, userLogout, gettingComments, gettingOffersNearPlaces} from './action';
 import {AuthorizationStatus} from '../const';
 
 import {InitalState} from '../types';
@@ -11,10 +11,11 @@ const initialState: InitalState = {
   citys: citys,
   currentNameOfCity: DEFAULT_CITY,
   offers: [],
+  offersNearPlaces: [],
   offersByName: [],
   sortType: 'Popular',
   isLoadingOffers: false,
-  authorizationStatus: AuthorizationStatus.Unknown,
+  authorizationStatus: AuthorizationStatus.NoAuth,
   error: null,
   user: null,
   comments: [],
@@ -25,6 +26,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(gettingOffers, (state, action) => {
       state.offers = action.payload;
       state.offersByName = state.offers.filter((offer) => offer.city.name === state.currentNameOfCity);
+    })
+    .addCase(gettingOffersNearPlaces, (state, action) => {
+      state.offersNearPlaces = action.payload;
     })
     .addCase(gettingComments, (state, action) => {
       state.comments = action.payload;

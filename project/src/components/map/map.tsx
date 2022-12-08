@@ -5,7 +5,7 @@ import useMap from '../../hooks/useMap';
 // import { useState } from 'react';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {mapIconUrl} from '../../const';
-import leaflet from 'leaflet';
+import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 // type MapProps = {card:TOfferCard} & {onCardHover: (id:number) => void}
@@ -14,10 +14,10 @@ import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
   selectedCard: TOfferCard | undefined;
-  outCard: TOfferCard | undefined;
+  classMapContainer: string;
 }
 
-export default function Map({selectedCard, outCard}: MapProps): JSX.Element {
+export default function Map({selectedCard, classMapContainer}: MapProps): JSX.Element {
   const currentNameOfCity = useAppSelector((state) => state.currentNameOfCity);
   const citys = useAppSelector((state) => state.citys);
   const currentCity = citys.find((city) => city.name === currentNameOfCity);
@@ -39,6 +39,8 @@ export default function Map({selectedCard, outCard}: MapProps): JSX.Element {
   });
 
   useEffect(() => {
+    const newLayer: LayerGroup = new LayerGroup();
+
     if (map) {
       cards.forEach((card:TOfferCard) => {
         leaflet
@@ -48,11 +50,19 @@ export default function Map({selectedCard, outCard}: MapProps): JSX.Element {
           }, {
             icon: selectedCard && card.id === selectedCard.id ? currentCustomIcon : defaultCustomIcon,
           })
-          .addTo(map);
+          .addTo(newLayer);
+
         map.flyTo({lat: card.city.location.latitude, lng: card.city.location.longitude});
       });
+      newLayer.addTo(map);
     }
+
+    return () => {
+      map?.removeLayer(newLayer);
+    };
+
   }, [map, cards, selectedCard, currentCity, defaultCustomIcon, currentCustomIcon]);
 
-  return <section className="cities__map map" ref={mapRef}></section>;
+  return <section className={`${classMapContainer}`} ref={mapRef}></section>;
+  // return <section className="cities__map map" ref={mapRef}></section>;
 }

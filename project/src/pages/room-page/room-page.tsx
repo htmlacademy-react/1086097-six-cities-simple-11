@@ -1,14 +1,18 @@
 import Logo from '../../components/logo/logo';
 import NearPlacesList from '../../components/near-places-list/near-places-list';
 import HeaderNavList from '../../components/header-nav-list/header-nav-list';
+import Map from '../../components/map/map';
 import {Helmet} from 'react-helmet-async';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { TOfferCard} from '../../types';
+import {TOfferCard} from '../../types';
+import {AuthorizationStatus} from '../../const';
 import NotFound from '../../pages/not-found/not-found';
 import { useParams } from 'react-router-dom';
-// import {arrayOfComments} from '../../mocks/comments';
 import {useAppSelector} from '../../hooks/useAppSelector';
+import {useEffect} from 'react';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {fetchCommentsAction, fetchOffersNearPlacesAction} from '../../store/api-action';
 
 type RoomPageProps = {
   cards: TOfferCard[];
@@ -16,16 +20,22 @@ type RoomPageProps = {
 
 export default function RoomPage({cards}:RoomPageProps): JSX.Element {
   const params = useParams();
-  const {comments} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (params.id) {
+      dispatch(fetchCommentsAction(params.id));
+      dispatch(fetchOffersNearPlacesAction(params.id));
+    }
+  },[dispatch, params]);
+
+  const {comments, offersNearPlaces, authorizationStatus} = useAppSelector((state) => state);
   const commentsAmount = comments.length;
+  const selectedCard = offersNearPlaces.find((item) => item.id === Number(params.id));
 
   const onListCardHover = (cardId:number | undefined) => {
     const currentCard = cards.find((card) => card.id === cardId);
     /* eslint-disable */ console.log(currentCard);
-  };
-
-  const onListCardOut = (cardId:number | undefined) => {
-    const currentCard = cards.find((card) => card.id === 2);
   };
 
   const currentCard: TOfferCard | undefined = cards.find((card) => card.id === Number(params.id));
@@ -140,17 +150,17 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsAmount}</span></h2>
                 {<CommentList allComments={comments} />}
-                {<CommentForm />}
+                {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm /> : null}
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          {offersNearPlaces ? <Map selectedCard={selectedCard} classMapContainer={'property__map map'} /> : null}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <NearPlacesList cards={cards} onListCardHover={onListCardHover} onListCardOut={onListCardOut} />
+              <NearPlacesList cards={offersNearPlaces} onListCardHover={onListCardHover} />
             </div>
           </section>
         </div>
