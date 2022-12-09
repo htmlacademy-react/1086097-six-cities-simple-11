@@ -41,6 +41,12 @@ export type TComment = {
   };
 };
 
+export type TSubmitComment = {
+  hotelId: number;
+  comment: string;
+  rating: number;
+}
+
 export type TCity = {
   location: {
     latitude: number;

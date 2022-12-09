@@ -6,6 +6,7 @@ import {useRef, FormEvent} from 'react';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {loginAction} from '../../store/api-action';
 import {AuthData} from '../../types/';
+
 export default function LoginPage(): JSX.Element {
 
   const loginRef = useRef<HTMLInputElement | null>(null);

@@ -8,17 +8,13 @@ import CommentList from '../../components/comment-list/comment-list';
 import {TOfferCard} from '../../types';
 import {AuthorizationStatus} from '../../const';
 import NotFound from '../../pages/not-found/not-found';
-import { useParams } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {fetchCommentsAction, fetchOffersNearPlacesAction} from '../../store/api-action';
 
-type RoomPageProps = {
-  cards: TOfferCard[];
-}
-
-export default function RoomPage({cards}:RoomPageProps): JSX.Element {
+export default function RoomPage(): JSX.Element {
   const params = useParams();
   const dispatch = useAppDispatch();
 
@@ -29,16 +25,17 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
     }
   },[dispatch, params]);
 
-  const {comments, offersNearPlaces, authorizationStatus} = useAppSelector((state) => state);
+  const {comments, offersNearPlaces, authorizationStatus, offers} = useAppSelector((state) => state);
   const commentsAmount = comments.length;
-  const selectedCard = offersNearPlaces.find((item) => item.id === Number(params.id));
+
+  const [selectedCardNearPlaces, setSelectedCardNearPlaces] = useState<TOfferCard | undefined>();
 
   const onListCardHover = (cardId:number | undefined) => {
-    const currentCard = cards.find((card) => card.id === cardId);
-    /* eslint-disable */ console.log(currentCard);
+    const currentCardNearPlaces = offersNearPlaces.find((item) => item.id === cardId);
+    setSelectedCardNearPlaces(currentCardNearPlaces);
   };
 
-  const currentCard: TOfferCard | undefined = cards.find((card) => card.id === Number(params.id));
+  const currentCard: TOfferCard | undefined = offers.find((card) => card.id === Number(params.id));
 
   const getStars = (offer: TOfferCard) => Math.round(offer.rating * 20);
 
@@ -109,7 +106,7 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
                   {currentCard.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {`${currentCard.bedrooms} Bedrooms`?? ''}
+                  {`${currentCard.bedrooms} Bedrooms` ?? ''}
                 </li>
                 <li className="property__feature property__feature--adults">
                   Max {currentCard.maxAdults} adults
@@ -122,7 +119,7 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  {currentCard ?  currentCard.goods.map((good) =>
+                  {currentCard ? currentCard.goods.map((good) =>
                     <li key={good} className="property__inside-item">{good}</li>
                   ) : ''}
                 </ul>
@@ -150,11 +147,11 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsAmount}</span></h2>
                 {<CommentList allComments={comments} />}
-                {authorizationStatus === AuthorizationStatus.Auth ? <CommentForm /> : null}
+                {params.id && authorizationStatus === AuthorizationStatus.Auth ? <CommentForm hotelId={currentCard.id}/> : null}
               </section>
             </div>
           </div>
-          {offersNearPlaces ? <Map selectedCard={selectedCard} classMapContainer={'property__map map'} /> : null}
+          {offersNearPlaces ? <Map cards={offersNearPlaces} selectedCard={selectedCardNearPlaces} classMapContainer={'property__map map'} /> : null}
         </section>
         <div className="container">
           <section className="near-places places">

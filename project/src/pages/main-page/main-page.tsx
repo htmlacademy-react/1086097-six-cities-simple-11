@@ -13,13 +13,9 @@ import {SortTypes, SortTitle} from '../../const';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {checkAuthAction, fetchOffersAction} from '../../store/api-action';
 
-type MainPageProps = {
-  cards: TOfferCard[];
-}
-
-export default function MainPage({cards}: MainPageProps): JSX.Element {
+export default function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const {isLoadingOffers, sortType, currentNameOfCity} = useAppSelector((state) => state);
+  const {isLoadingOffers, sortType, currentNameOfCity, offersByName} = useAppSelector((state) => state);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
@@ -29,10 +25,10 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
   const sortListRef = useRef<HTMLUListElement>(null);
 
   const [selectedCard, setSelectedCard] = useState<TOfferCard | undefined>();
-  const amountOfCards = cards.length ?? '';
+  const amountOfCards = offersByName.length ?? '';
 
   const onListCardHover = (cardId:number | undefined) => {
-    const currentCard = cards.find((card) => card.id === cardId);
+    const currentCard = offersByName.find((card) => card.id === cardId);
     setSelectedCard(currentCard);
   };
 
@@ -109,10 +105,10 @@ export default function MainPage({cards}: MainPageProps): JSX.Element {
                     <li className={`places__option ${sortType === SortTypes.TopRatedFirst ? 'places__option--active' : ''}`} tabIndex={5} onClick={handleSortTopRatedFirstItemClick}>Top rated first</li>
                   </ul>
                 </form>
-                <PlaceList cards={cards} onListCardHover={onListCardHover} />
+                <PlaceList cards={offersByName} onListCardHover={onListCardHover} />
               </section>
               <div className="cities__right-section">
-                <Map selectedCard={selectedCard} classMapContainer={'cities__map map'} />
+                <Map cards={offersByName} selectedCard={selectedCard} classMapContainer={'cities__map map'} />
               </div>
             </div>
           </div>

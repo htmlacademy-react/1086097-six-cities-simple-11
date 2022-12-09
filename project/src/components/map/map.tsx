@@ -13,15 +13,15 @@ import 'leaflet/dist/leaflet.css';
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
 
 type MapProps = {
+  cards: TOfferCard[] | undefined;
   selectedCard: TOfferCard | undefined;
   classMapContainer: string;
 }
 
-export default function Map({selectedCard, classMapContainer}: MapProps): JSX.Element {
+export default function Map({cards, selectedCard, classMapContainer}: MapProps): JSX.Element {
   const currentNameOfCity = useAppSelector((state) => state.currentNameOfCity);
   const citys = useAppSelector((state) => state.citys);
   const currentCity = citys.find((city) => city.name === currentNameOfCity);
-  const cards = useAppSelector((state) => state.offersByName);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentCity);
@@ -41,7 +41,7 @@ export default function Map({selectedCard, classMapContainer}: MapProps): JSX.El
   useEffect(() => {
     const newLayer: LayerGroup = new LayerGroup();
 
-    if (map) {
+    if (map && cards) {
       cards.forEach((card:TOfferCard) => {
         leaflet
           .marker({

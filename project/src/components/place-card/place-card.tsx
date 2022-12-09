@@ -17,10 +17,6 @@ export default function PlaceCard({card, classCard, onCardHover}:PlaceCardProps)
     onCardHover(id);
   };
 
-  const handleCardTitleClick = () => {
-    onCardHover(id);
-  };
-
   const selectedClassCard = classCard;
   const getStars = (ratingCard: number) => Math.round(ratingCard * 20);
   return (
@@ -46,7 +42,7 @@ export default function PlaceCard({card, classCard, onCardHover}:PlaceCardProps)
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link onClick={handleCardTitleClick} to={`${AppRoute.Room}/${id}`}>{title}</Link>
+          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

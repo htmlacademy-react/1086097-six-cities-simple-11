@@ -7,20 +7,17 @@ import RoomPage from '../../pages/room-page/room-page';
 import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
-import {useAppSelector} from '../../hooks/useAppSelector';
 
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-  const {offersByName} = useAppSelector((state) => state);
-
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>
         <Routes>
-          <Route index element={<MainPage cards={offersByName} />} />
-          <Route path={`${AppRoute.Room}/:id`} element={<RoomPage cards={offersByName} />} />
+          <Route index element={<MainPage />} />
+          <Route path={`${AppRoute.Room}/:id`} element={<RoomPage />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route path="*" element={<NotFound />} />
           {/* <Route path={AppRoute.Room} element={<PrivateRoute authorizationStatus={AuthorizationStatus.Auth}><RoomPage /></PrivateRoute>} /> */}

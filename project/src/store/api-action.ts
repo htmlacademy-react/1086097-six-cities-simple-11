@@ -1,5 +1,5 @@
 // import {createAction} from '@reduxjs/toolkit';
-import {TOfferCard, UserData, AuthData, TComment, THotelId} from '../types';
+import {TOfferCard, UserData, AuthData, TComment, THotelId, TSubmitComment} from '../types';
 import {APIRoute, AuthorizationStatus, AppRoute} from '../const';
 import {saveToken, dropToken} from '../services/token';
 
@@ -57,6 +57,14 @@ export const loginAction = createAsyncThunk<void, AuthData, {dispatch: AppDispat
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(settingUser(user));
     dispatch(redirectToRoute(AppRoute.Root));
+  },
+);
+
+export const submitCommentAction = createAsyncThunk<void, TSubmitComment, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
+  'comments/submitComments',
+  async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
+    const {data} = await api.post<TComment[]>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
+    dispatch(gettingComments(data));
   },
 );
 
