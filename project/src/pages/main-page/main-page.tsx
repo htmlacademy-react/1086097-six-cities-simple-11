@@ -56,6 +56,13 @@ export default function MainPage(): JSX.Element {
     sortListRef.current?.classList.toggle('places__options--opened');
   };
 
+  const sortingFunctions = [
+    handleSortPopularItemClick,
+    handleSortLowToHighItemClick,
+    handleSortHighToLowItemClick,
+    handleSortTopRatedFirstItemClick,
+  ];
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -98,11 +105,7 @@ export default function MainPage(): JSX.Element {
                     </svg>
                   </span>
                   <ul className="places__options places__options--custom" ref={sortListRef}>
-                    {/* Глеб, я помню, не успел из этого компонентик сделать ) */}
-                    <li className={`places__option ${sortType === SortTypes.Popular ? 'places__option--active' : ''}`} tabIndex={2} onClick={handleSortPopularItemClick}>Popular</li>
-                    <li className={`places__option ${sortType === SortTypes.LowToHigh ? 'places__option--active' : ''}`} tabIndex={3} onClick={handleSortLowToHighItemClick}>Price: low to high</li>
-                    <li className={`places__option ${sortType === SortTypes.HighToLow ? 'places__option--active' : ''}`} tabIndex={4} onClick={handleSortHighToLowItemClick}>Price: high to low</li>
-                    <li className={`places__option ${sortType === SortTypes.TopRatedFirst ? 'places__option--active' : ''}`} tabIndex={5} onClick={handleSortTopRatedFirstItemClick}>Top rated first</li>
+                    {Object.entries(SortTitle).map((title, index) => <li className={`places__option ${sortType === SortTypes[title[0] as keyof typeof SortTypes] ? 'places__option--active' : ''}`} tabIndex={index + 2} onClick={sortingFunctions[index]} key={title[0]}>{title[1]}</li>)}
                   </ul>
                 </form>
                 <PlaceList cards={offersByName} onListCardHover={onListCardHover} />

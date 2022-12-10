@@ -18,6 +18,7 @@ export enum ClassForCardAndList {
   NearPlacesList = 'near-places__list',
 }
 
+
 export enum SortTypes {
   Popular = 'Popular',
   LowToHigh = 'LowToHigh',
