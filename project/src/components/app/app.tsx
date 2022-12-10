@@ -8,7 +8,7 @@ import {Route, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {HelmetProvider} from 'react-helmet-async';
 
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
