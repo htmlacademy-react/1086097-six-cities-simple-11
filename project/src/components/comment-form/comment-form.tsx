@@ -20,7 +20,7 @@ export default function CommentForm({hotelId}:CommentFormProps): JSX.Element {
     setReview(event.target.value);
   };
 
-  const handleInputClick = (event: React.MouseEvent<HTMLInputElement>):void => {
+  const handleInputClick = (event: React.ChangeEvent<HTMLInputElement>):void => {
     setRating(Number(event.currentTarget.value));
   };
 
