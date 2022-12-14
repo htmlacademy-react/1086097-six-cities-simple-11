@@ -39,13 +39,13 @@ export const fetchOffersNearPlacesAction = createAsyncThunk<void, string, {dispa
 export const checkAuthAction = createAsyncThunk<void, undefined, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    // try {
-    //   const {data: user} = await api.get<UserData>(APIRoute.Login);
-    //   dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    //   dispatch(settingUser(user));
-    // } catch {
-    //   dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    // }
+    try {
+      const {data: user} = await api.get<UserData>(APIRoute.Login);
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(settingUser(user));
+    } catch {
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
   },
 );
 
