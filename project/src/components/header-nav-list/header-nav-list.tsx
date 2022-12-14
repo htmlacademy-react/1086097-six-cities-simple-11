@@ -14,7 +14,7 @@ export default function HeaderNavList(): JSX.Element {
 
   return (
     <ul className="header__nav-list">
-      { authorizationStatus === AuthorizationStatus.Unknown || authorizationStatus === AuthorizationStatus.NoAuth ?
+      { authorizationStatus === AuthorizationStatus.NoAuth ?
         <li className="header__nav-item user">
           <div className="header__nav-profile">
             <div className="header__avatar-wrapper user__avatar-wrapper"></div>

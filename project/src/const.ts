@@ -8,7 +8,6 @@ export enum AppRoute {
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
 }
 
 export enum ClassForCardAndList {
@@ -17,7 +16,6 @@ export enum ClassForCardAndList {
   CitiesList = 'cities__places-list tabs__content',
   NearPlacesList = 'near-places__list',
 }
-
 
 export enum SortTypes {
   Popular = 'Popular',
@@ -60,13 +58,8 @@ export const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
 export const REQUEST_TIMEOUT = 5000;
 export const TIMEOUT_SHOW_ERROR = 2000;
 
-export type AuthData = {
-  login: string;
-  password: string;
-};
-
-export type UserData = {
-  id: number;
-  email: string;
-  token: string;
-};
+export enum NameSpace {
+  Offers = 'OFFERS',
+  User = 'USER',
+  App = 'APP',
+}

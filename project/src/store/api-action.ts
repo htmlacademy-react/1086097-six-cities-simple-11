@@ -39,13 +39,13 @@ export const fetchOffersNearPlacesAction = createAsyncThunk<void, string, {dispa
 export const checkAuthAction = createAsyncThunk<void, undefined, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
   'user/checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    try {
-      const {data: user} = await api.get<UserData>(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      dispatch(settingUser(user));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+    // try {
+    //   const {data: user} = await api.get<UserData>(APIRoute.Login);
+    //   dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    //   dispatch(settingUser(user));
+    // } catch {
+    //   dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    // }
   },
 );
 
@@ -61,7 +61,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {dispatch: AppDispat
 );
 
 export const submitCommentAction = createAsyncThunk<void, TSubmitComment, {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
-  'comments/submitComments',
+  'offers/submitComments',
   async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
     const {data} = await api.post<TComment[]>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
     dispatch(gettingComments(data));
@@ -80,7 +80,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {dispatch: AppDisp
 );
 
 export const clearErrorAction = createAsyncThunk(
-  'page/clearError',
+  'app/clearError',
   () => {
     setTimeout(() => store.dispatch(setError(null)),
       3000,
