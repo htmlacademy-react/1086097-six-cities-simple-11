@@ -1,5 +1,5 @@
 import Logo from '../../components/logo/logo';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 
 import {useRef, FormEvent} from 'react';
@@ -15,9 +15,7 @@ export default function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
-    // if (authData.password.match(/'^(?=.\d)(?=.[a-zA-Z])(?!.\s).$'/)) {
     dispatch(loginAction(authData));
-    // }
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
