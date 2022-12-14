@@ -22,12 +22,10 @@ export type TOfferCard = {
 };
 
 export type THost = {
-  host: {
-    avatarUrl: string;
-    id: number;
-    isPro: boolean;
-    name: string;
-  };
+  avatarUrl: string;
+  id: number;
+  isPro: boolean;
+  name: string;
 };
 
 export type TComment = {
@@ -42,6 +40,12 @@ export type TComment = {
     name: string;
   };
 };
+
+export type TSubmitComment = {
+  hotelId: number;
+  comment: string;
+  rating: number;
+}
 
 export type TCity = {
   location: {
@@ -59,20 +63,21 @@ export type TPoint = {
 };
 
 export type TSort = string;
+export type THotelId = string;
 
 export type InitalState = {
   citys: TCity[];
   currentNameOfCity: string;
   offers: TOfferCard[];
+  offersNearPlaces: TOfferCard[];
   offersByName: TOfferCard[];
   sortType: string;
   isLoadingOffers: boolean;
   authorizationStatus: string;
   error: string | null;
   user: UserData | null;
+  comments: TComment[];
 }
-
-export type Token = string;
 
 export type AuthData = {
   login: string;

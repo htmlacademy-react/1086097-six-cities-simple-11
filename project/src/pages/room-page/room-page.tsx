@@ -1,32 +1,44 @@
 import Logo from '../../components/logo/logo';
 import NearPlacesList from '../../components/near-places-list/near-places-list';
 import HeaderNavList from '../../components/header-nav-list/header-nav-list';
+import Map from '../../components/map/map';
 import {Helmet} from 'react-helmet-async';
 import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
-import { TOfferCard} from '../../types';
+import {TOfferCard} from '../../types';
+import {AuthorizationStatus} from '../../const';
+
 import NotFound from '../../pages/not-found/not-found';
-import { useParams } from 'react-router-dom';
-import {arrayOfComments} from '../../mocks/comments';
+import {useParams} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {useEffect, useState} from 'react';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {fetchCommentsAction, fetchOffersNearPlacesAction} from '../../store/api-action';
 
-type RoomPageProps = {
-  cards: TOfferCard[];
-}
-
-export default function RoomPage({cards}:RoomPageProps): JSX.Element {
+export default function RoomPage(): JSX.Element {
   const params = useParams();
-  const commentsAmount = arrayOfComments.length;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (params.id) {
+      dispatch(fetchCommentsAction(params.id));
+      dispatch(fetchOffersNearPlacesAction(params.id));
+    }
+  },[dispatch, params]);
+
+  const {comments, offersNearPlaces, authorizationStatus, offers} = useAppSelector((state) => state);
+  const commentsAmount = comments.length;
+
+  const [selectedCardNearPlaces, setSelectedCardNearPlaces] = useState<TOfferCard | undefined>();
 
   const onListCardHover = (cardId:number | undefined) => {
-    const currentCard = cards.find((card) => card.id === cardId);
-    /* eslint-disable */ console.log(currentCard);
+    const currentCardNearPlaces = offersNearPlaces.find((item) => item.id === cardId);
+    setSelectedCardNearPlaces(currentCardNearPlaces);
   };
 
-  const onListCardOut = (cardId:number | undefined) => {
-    const currentCard = cards.find((card) => card.id === 2);
-  };
+  const currentCard: TOfferCard | undefined = offers.find((card) => card.id === Number(params.id));
 
-  const currentCard: TOfferCard | undefined = cards.find((card) => card.id === Number(params.id));
+  const getStars = (offer: TOfferCard) => Math.round(offer.rating * 20);
 
   return currentCard ? (
     <div className="page">
@@ -52,24 +64,10 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src={`${currentCard.images[0]}`} alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="studio" />
-              </div>
+              {currentCard.images && currentCard.images.slice(0, 6).map((img) => (
+                <div className="property__image-wrapper" key={img}>
+                  <img className="property__image" src={img} alt={currentCard.type}/>
+                </div>))}
             </div>
           </div>
           <div className="property__container container">
@@ -81,26 +79,24 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {currentCard.title}
-                  {/* Beautiful &amp; luxurious studio at great location */}
                 </h1>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: currentCard.rating}}></span>
+                  <span style={{width: `${getStars(currentCard)}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">4.8</span>
+                <span className="property__rating-value rating__value">{currentCard.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   {currentCard.type}
-                  {/* Apartment */}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {Number(`${currentCard.bedrooms}`) > 1 ? `${currentCard.bedrooms} Bedrooms` : `${currentCard.bedrooms} Bedroom`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {currentCard.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
@@ -110,50 +106,21 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
+                  {currentCard ? currentCard.goods.map((good) =>
+                    <li key={good} className="property__inside-item">{good}</li>
+                  ) : null}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={currentCard.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    Angelina
+                    {currentCard.host.name}
                   </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
+                  { currentCard.host.isPro ? <span className="property__user-status"> Pro </span> : null}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
@@ -166,18 +133,18 @@ export default function RoomPage({cards}:RoomPageProps): JSX.Element {
               </div>
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsAmount}</span></h2>
-                {<CommentList allComments={arrayOfComments} />}
-                {<CommentForm />}
+                {<CommentList allComments={comments} />}
+                {params.id && authorizationStatus === AuthorizationStatus.Auth ? <CommentForm hotelId={currentCard.id}/> : null}
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          {offersNearPlaces ? <Map cards={offersNearPlaces} selectedCard={selectedCardNearPlaces} classMapContainer={'property__map map'} /> : null}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <NearPlacesList cards={cards} onListCardHover={onListCardHover} onListCardOut={onListCardOut} />
+              <NearPlacesList cards={offersNearPlaces} onListCardHover={onListCardHover} />
             </div>
           </section>
         </div>
