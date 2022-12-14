@@ -15,9 +15,9 @@ export default function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const onSubmit = (authData: AuthData) => {
-    // if (authData.password.match(/'^(?=.\d)(?=.[a-zA-Z])(?!.\s).$'/)) {
-    dispatch(loginAction(authData));
-    // }
+    if (authData.password.match(/\d+[a-zA-Z]+|[a-zA-Z]+\d+/)) {
+      dispatch(loginAction(authData));
+    }
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
