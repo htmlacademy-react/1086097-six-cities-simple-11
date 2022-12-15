@@ -73,7 +73,7 @@ export type InitalState = {
   offersByName: TOfferCard[];
   sortType: string;
   isLoadingOffers: boolean;
-  // authorizationStatus: string;
+  authorizationStatus: string;
   error: string | null;
   user: UserData | null;
   comments: TComment[];

@@ -15,7 +15,7 @@ const initialState: InitalState = {
   offersByName: [],
   sortType: 'Popular',
   isLoadingOffers: false,
-  // authorizationStatus: AuthorizationStatus.NoAuth,
+  authorizationStatus: AuthorizationStatus.NoAuth,
   error: null,
   user: null,
   comments: [],
@@ -41,9 +41,9 @@ const reducer = createReducer(initialState, (builder) => {
       state.offersByName = state.offers.filter((offer) => offer.city.name === state.currentNameOfCity);
       state.sortType = SortTypes.Popular;
     })
-    // .addCase(requireAuthorization, (state, action) => {
-    //   state.authorizationStatus = action.payload;
-    // })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     })

@@ -64,24 +64,10 @@ export default function RoomPage(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img className="property__image" src={`${currentCard.images[0]}`} alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="studio" />
-              </div>
-              <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="studio" />
-              </div>
+              {currentCard.images && currentCard.images.slice(0, 6).map((img) => (
+                <div className="property__image-wrapper" key={img}>
+                  <img className="property__image" src={img} alt={currentCard.type}/>
+                </div>))}
             </div>
           </div>
           <div className="property__container container">
@@ -107,7 +93,7 @@ export default function RoomPage(): JSX.Element {
                   {currentCard.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {`${currentCard.bedrooms} Bedrooms` ?? ''}
+                  {Number(`${currentCard.bedrooms}`) > 1 ? `${currentCard.bedrooms} Bedrooms` : `${currentCard.bedrooms} Bedroom`}
                 </li>
                 <li className="property__feature property__feature--adults">
                   Max {currentCard.maxAdults} adults
@@ -122,7 +108,7 @@ export default function RoomPage(): JSX.Element {
                 <ul className="property__inside-list">
                   {currentCard ? currentCard.goods.map((good) =>
                     <li key={good} className="property__inside-item">{good}</li>
-                  ) : ''}
+                  ) : null}
                 </ul>
               </div>
               <div className="property__host">

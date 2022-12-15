@@ -8,7 +8,7 @@ export const gettingOffersNearPlaces = createAction('offers/gettingOffersNearPla
 export const changeCity = createAction('offers/changeCity', (value: string) => ({payload: value}));
 export const changeSortType = createAction('offers/changeSortType', (value:string) => ({payload: value}));
 
-export const gettingComments = createAction('offers/gettingComments', (value:TComment[]) => ({payload: value}));
+export const gettingComments = createAction('comments/gettingComments', (value:TComment[]) => ({payload: value}));
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const settingUser = createAction<UserData | null>('user/settingUser');
