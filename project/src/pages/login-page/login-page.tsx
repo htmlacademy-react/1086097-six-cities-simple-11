@@ -65,7 +65,7 @@ export default function LoginPage(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to="/">
-                <span>Amsterdam</span>
+                <span>Amsterdam.</span>
               </Link>
             </div>
           </section>
