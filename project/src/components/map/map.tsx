@@ -2,12 +2,11 @@
 import {TOfferCard} from '../../types';
 import {useRef, useEffect} from 'react';
 import useMap from '../../hooks/useMap';
-// import { useState } from 'react';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {mapIconUrl} from '../../const';
 import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
+import {getCitys, getCurrentNameOfCity} from '../../store/offers-process/selectors';
 // type MapProps = {card:TOfferCard} & {onCardHover: (id:number) => void}
 // type PlaceCardProps = TOfferCard & {onCardHover: (id:number) => void}
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
@@ -19,8 +18,8 @@ type MapProps = {
 }
 
 export default function Map({cards, selectedCard, classMapContainer}: MapProps): JSX.Element {
-  const currentNameOfCity = useAppSelector((state) => state.currentNameOfCity);
-  const citys = useAppSelector((state) => state.citys);
+  const citys = useAppSelector(getCitys);
+  const currentNameOfCity = useAppSelector(getCurrentNameOfCity);
   const currentCity = citys.find((city) => city.name === currentNameOfCity);
 
   const mapRef = useRef(null);
@@ -64,5 +63,4 @@ export default function Map({cards, selectedCard, classMapContainer}: MapProps):
   }, [map, cards, selectedCard, currentCity, defaultCustomIcon, currentCustomIcon]);
 
   return <section className={`${classMapContainer}`} ref={mapRef}></section>;
-  // return <section className="cities__map map" ref={mapRef}></section>;
 }

@@ -1,15 +1,16 @@
 import { TComment } from '../../types';
 import Comment from '../comment/comment';
+// import {sortByDate} from '../../utils';
 
 type CommentListProps = {
-  allComments: TComment[];
+  allComments:TComment[];
 }
 
 export default function CommentList({allComments}:CommentListProps): JSX.Element {
 
   return (
     <ul className="reviews__list">
-      {allComments.slice(0, 10).map((comment) => <Comment currentComment={comment} key={comment.id}/>)}
+      {allComments.map((comment) => <Comment currentComment={comment} key={comment.id}/>)}
     </ul>
   );
 }

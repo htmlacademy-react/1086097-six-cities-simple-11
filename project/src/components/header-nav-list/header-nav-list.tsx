@@ -3,10 +3,12 @@ import {useAppSelector} from '../../hooks/useAppSelector';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {logoutAction} from '../../store/api-action';
 import {Link} from 'react-router-dom';
+import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
 
 export default function HeaderNavList(): JSX.Element {
   const dispatch = useAppDispatch();
-  const {authorizationStatus, user} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
 
   const handleOutAuthorizationStatusClick = () => {
     dispatch(logoutAction());

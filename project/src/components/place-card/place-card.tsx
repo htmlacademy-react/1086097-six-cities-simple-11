@@ -1,13 +1,11 @@
 
 import { TOfferCard } from '../../types';
 import Premium from '../premium/premium';
-// import { useState } from 'react';
 import { AppRoute } from '../../const';
 import {Link} from 'react-router-dom';
 
 type PlaceCardProps = {card:TOfferCard} & {classCard:string} & {onCardHover: (id:number) => void}
 // type PlaceCardProps = TOfferCard & {onCardHover: (id:number) => void}
-
 // export default function PlaceCard({isPremium, img, price, rating, title, type, id, onCardHover}:PlaceCardProps): JSX.Element {
 export default function PlaceCard({card, classCard, onCardHover}:PlaceCardProps): JSX.Element {
 
@@ -15,6 +13,13 @@ export default function PlaceCard({card, classCard, onCardHover}:PlaceCardProps)
 
   const handleCardMouseMove = () => {
     onCardHover(id);
+  };
+
+  const handleClickCard = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const selectedClassCard = classCard;
@@ -42,7 +47,7 @@ export default function PlaceCard({card, classCard, onCardHover}:PlaceCardProps)
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Room}/${id}`}>{title}</Link>
+          <Link onClick={handleClickCard} to={`${AppRoute.Room}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

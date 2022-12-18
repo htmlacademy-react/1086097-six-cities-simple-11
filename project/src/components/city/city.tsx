@@ -1,12 +1,13 @@
 import {Link} from 'react-router-dom';
 import {TCity} from '../../types';
 import {useAppSelector} from '../../hooks/useAppSelector';
+import {getCurrentNameOfCity} from '../../store/offers-process/selectors';
 
 type CityProps = { city: TCity} & {onLinkClick: (id: string) => void}
 
 export default function City({city, onLinkClick}:CityProps): JSX.Element {
   const {name} = city;
-  const currentCity = useAppSelector((state) => state.currentNameOfCity);
+  const currentCity = useAppSelector(getCurrentNameOfCity);
   const isActiveLink = name === currentCity;
 
   const handleLinkClick = () => {
