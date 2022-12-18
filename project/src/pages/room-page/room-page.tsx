@@ -12,8 +12,8 @@ import {useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {useEffect} from 'react';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
-import {fetchCommentsAction, fetchOffersNearPlacesAction} from '../../store/api-action';
-import {getOffers, getOffersNearPlaces, getComments} from '../../store/offers-process/selectors';
+import {fetchCommentsAction, fetchOffersNearPlacesAction, fetchCurrentOfferAction} from '../../store/api-action';
+import {getOffersNearPlaces, getComments, getCurrentOffer} from '../../store/offers-process/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 export default function RoomPage(): JSX.Element {
@@ -24,16 +24,17 @@ export default function RoomPage(): JSX.Element {
     if (params.id) {
       dispatch(fetchCommentsAction(params.id));
       dispatch(fetchOffersNearPlacesAction(params.id));
+      dispatch(fetchCurrentOfferAction(params.id));
     }
   },[dispatch, params]);
 
-  const offers = useAppSelector(getOffers);
   const offersNearPlaces = useAppSelector(getOffersNearPlaces);
   const comments = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const currentCard = useAppSelector(getCurrentOffer);
   const commentsAmount = comments.length;
 
-  const currentCard: TOfferCard | undefined = offers.find((card) => card.id === Number(params.id));
+  // const currentCard: TOfferCard | undefined = offers.find((card) => card.id === Number(params.id));
 
   const getStars = (offer: TOfferCard) => Math.round(offer.rating * 20);
 

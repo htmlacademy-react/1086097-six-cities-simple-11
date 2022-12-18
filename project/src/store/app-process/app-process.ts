@@ -13,15 +13,8 @@ export const appProcess = createSlice({
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
-    clearErrorAction: (state) => {setTimeout(() => {state.error = null;}, 3000,);}
+    clearErrorAction: (state) => {state.error = null;}
   },
-  // extraReducers(builder){
-  //   builder
-  //     .addCase(clearErrorAction, (state)=>{
-  //       setTimeout(() => {state.error = null;}, 3000,);
-  //     });
-  // }
-
 });
 
 export const {setError, clearErrorAction} = appProcess.actions;

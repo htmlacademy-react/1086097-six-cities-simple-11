@@ -22,6 +22,7 @@ export type TOfferProcess = {
   isLoadingOffers: boolean;
   comments: TComment[];
   isSendingComment: boolean;
+  currentOffer: TOfferCard | undefined;
 }
 
 export type State = ReturnType<typeof store.getState>;

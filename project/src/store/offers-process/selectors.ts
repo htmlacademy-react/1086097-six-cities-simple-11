@@ -6,6 +6,7 @@ const getCitys = (state: State): TCity[] => state[NameSpace.Offers].citys;
 const getCurrentNameOfCity = (state: State): string => state[NameSpace.Offers].currentNameOfCity;
 const getSortType = (state: State): string => state[NameSpace.Offers].sortType;
 const getOffers = (state: State): TOfferCard[] => state[NameSpace.Offers].offers;
+const getCurrentOffer = (state: State): TOfferCard | undefined => state[NameSpace.Offers].currentOffer;
 const getOffersNearPlaces = (state: State): TOfferCard[] => state[NameSpace.Offers].offersNearPlaces;
 const getOffersByName = (state: State): TOfferCard[] => state[NameSpace.Offers].offersByName;
 const getIsLoadingOffers = (state: State): boolean => state[NameSpace.Offers].isLoadingOffers;
@@ -17,6 +18,7 @@ export {
   getCurrentNameOfCity,
   getSortType,
   getOffers,
+  getCurrentOffer,
   getOffersNearPlaces,
   getOffersByName,
   getIsLoadingOffers,

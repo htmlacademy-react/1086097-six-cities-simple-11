@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
-import {fetchOffersAction, fetchOffersNearPlacesAction, fetchCommentsAction, submitCommentAction} from '../api-action';
+import {fetchOffersAction, fetchCurrentOfferAction, fetchOffersNearPlacesAction, fetchCommentsAction, submitCommentAction} from '../api-action';
 import {sortByPopular, sortFromLowToHigh, sortFromHighToLow, sortTopRatedFirst} from '../../utils';
 
 import { TOfferProcess } from '../../types/state';
@@ -17,6 +17,7 @@ const initialState: TOfferProcess = {
   isLoadingOffers: true,
   comments: [],
   isSendingComment: false,
+  currentOffer: undefined,
 };
 
 export const offersProcess = createSlice({
@@ -44,14 +45,24 @@ export const offersProcess = createSlice({
         state.isLoadingOffers = true;
       })
       .addCase(fetchOffersAction.rejected, (state)=>{
-        state.isLoadingOffers = false;
+        state.isLoadingOffers = true;
       })
       .addCase(fetchOffersAction.fulfilled, (state, action)=>{
         state.offers = action.payload;
         state.offersByName = state.offers.filter((offer) => offer.city.name === state.currentNameOfCity);
+        state.isLoadingOffers = false;
+      })
+      .addCase(fetchCurrentOfferAction.fulfilled, (state, action)=>{
+        state.currentOffer = action.payload;
+        state.isLoadingOffers = false;
+      })
+      .addCase(fetchCurrentOfferAction.rejected, (state)=>{
+        state.currentOffer = undefined;
         state.isLoadingOffers = true;
       })
-
+      .addCase(fetchCurrentOfferAction.pending, (state)=>{
+        state.isLoadingOffers = true;
+      })
       .addCase(fetchOffersNearPlacesAction.pending, (state)=>{
         state.isLoadingOffers = true;
       })

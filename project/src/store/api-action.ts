@@ -7,7 +7,6 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
 
 import {redirectToRoute} from './action';
-// import {store} from './';
 
 type ThunkApiConfig = {
   dispatch: AppDispatch;
@@ -18,6 +17,14 @@ type ThunkApiConfig = {
 export const fetchOffersAction = createAsyncThunk<TOfferCard[], undefined, ThunkApiConfig>('offers/gettingOffers',
   async (_arg, {extra: api}) => {
     const {data} = await api.get<TOfferCard[]>(APIRoute.Offers);
+    return data;
+  },
+);
+
+export const fetchCurrentOfferAction = createAsyncThunk<TOfferCard, string, ThunkApiConfig>(
+  'offers/gettingCurrentOffer',
+  async (id, {extra: api}) => {
+    const {data} = await api.get<TOfferCard>(`${APIRoute.Offers}/${id}`);
     return data;
   },
 );
@@ -70,8 +77,3 @@ export const logoutAction = createAsyncThunk<void, undefined,ThunkApiConfig>(
     dropToken();
   },
 );
-
-// export const clearErrorAction = createAsyncThunk<void, undefined,ThunkApiConfig>(
-//   'app/clearError',
-//   () => {setTimeout(() => store.dispatch(setError(null)), 3000,);},
-// );

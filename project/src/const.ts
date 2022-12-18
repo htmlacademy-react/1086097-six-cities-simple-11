@@ -34,8 +34,8 @@ export const SortTitle = {
 export const ratingLevels:string[] = ['perfect', 'good', 'not bad', 'badly', 'terribly'];
 
 export const DEFAULT_RATING = 0;
-export const MIN_LENGTH_COMMENT = 2;
-export const MAX_LENGTH_COMMENT = 50;
+export const MIN_LENGTH_COMMENT = 50;
+export const MAX_LENGTH_COMMENT = 300;
 
 export const DEFAULT_CITY = 'Paris';
 

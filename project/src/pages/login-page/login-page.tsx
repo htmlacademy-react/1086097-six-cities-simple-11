@@ -24,7 +24,7 @@ export default function LoginPage(): JSX.Element {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       if (!passwordRef.current.value.match(/\d+[a-zA-Z]+|[a-zA-Z]+\d+/)) {
-        toast('Пароль должен состоять хотя бы из одной цифры и буквы');
+        toast.warn('Пароль должен состоять хотя бы из одной цифры и буквы');
         return;
       }
 

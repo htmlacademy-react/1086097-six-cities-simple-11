@@ -85,7 +85,7 @@ export default function MainPage(): JSX.Element {
         </div>
       </header>
 
-      { isLoadingOffers ?
+      { !isLoadingOffers ?
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
