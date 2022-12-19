@@ -1,12 +1,15 @@
 import Logo from '../../components/logo/logo';
 import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useRef, FormEvent} from 'react';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {loginAction} from '../../store/api-action';
 import {AuthData} from '../../types/';
+import {getRandomCity} from '../../utils';
+import {AppRoute, PASSWORD_WARN, PASSWORD_MATCH} from '../../const';
+import {changeCity} from '../../store/offers-process/offers-process';
 
 export default function LoginPage(): JSX.Element {
 
@@ -23,8 +26,8 @@ export default function LoginPage(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
-      if (!passwordRef.current.value.match(/\d+[a-zA-Z]+|[a-zA-Z]+\d+/)) {
-        toast.warn('Пароль должен состоять хотя бы из одной цифры и буквы');
+      if (!passwordRef.current.value.match(PASSWORD_MATCH)) {
+        toast.warn(PASSWORD_WARN);
         return;
       }
 
@@ -33,6 +36,12 @@ export default function LoginPage(): JSX.Element {
         password: passwordRef.current.value,
       });
     }
+  };
+
+  const randomNameOfCity = getRandomCity();
+
+  const handleLinkClick = () => {
+    dispatch(changeCity(randomNameOfCity));
   };
 
   return (
@@ -68,8 +77,8 @@ export default function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to="/">
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" to={`${AppRoute.Root}`} onClick={handleLinkClick}>
+                <span>{randomNameOfCity}</span>
               </Link>
             </div>
           </section>
