@@ -6,16 +6,20 @@ import HeaderNavList from '../../components/header-nav-list/header-nav-list';
 import {TOfferCard} from '../../types';
 import {Helmet} from 'react-helmet-async';
 import Map from '../../components/map/map';
-import {useState, useRef, useEffect} from 'react';
-import {changeSortType} from '../../store/action';
-import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {SortTypes, SortTitle} from '../../const';
+import {useState, useRef, useEffect} from 'react';
+import {changeSortType} from '../../store/offers-process/offers-process';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {checkAuthAction, fetchOffersAction} from '../../store/api-action';
+import {getSortType, getCurrentNameOfCity, getIsLoadingOffers, getOffersByName} from '../../store/offers-process/selectors';
 
 export default function MainPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const {isLoadingOffers, sortType, currentNameOfCity, offersByName} = useAppSelector((state) => state);
+  const isLoadingOffers = useAppSelector(getIsLoadingOffers);
+  const sortType = useAppSelector(getSortType);
+  const currentNameOfCity = useAppSelector(getCurrentNameOfCity);
+  const offersByName = useAppSelector(getOffersByName);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
@@ -81,7 +85,7 @@ export default function MainPage(): JSX.Element {
         </div>
       </header>
 
-      { isLoadingOffers ?
+      { !isLoadingOffers ?
         <main className="page__main page__main--index">
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">

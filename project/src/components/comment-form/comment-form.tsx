@@ -3,6 +3,8 @@ import RatingInputRadio from '../rating-input-radio/rating-input-radio';
 import {ratingLevels, DEFAULT_RATING, MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT} from '../../const';
 import {submitCommentAction} from '../../store/api-action';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {getIsSendingComment} from '../../store/offers-process/selectors';
 import {TSubmitComment} from '../../types/';
 
 type CommentFormProps = {
@@ -15,6 +17,7 @@ export default function CommentForm({hotelId}:CommentFormProps): JSX.Element {
   const [reviewText, setReview] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [isReset, setIsReset] = useState(false);
+  const isSendingComment = useAppSelector(getIsSendingComment);
 
   const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>):void => {
     setReview(event.target.value);
@@ -35,7 +38,9 @@ export default function CommentForm({hotelId}:CommentFormProps): JSX.Element {
 
   const onSubmit = async (data: TSubmitComment) => {
     await dispatch(submitCommentAction(data));
-    resetForm();
+    if (!isSendingComment) {
+      resetForm();
+    }
   };
 
   const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {

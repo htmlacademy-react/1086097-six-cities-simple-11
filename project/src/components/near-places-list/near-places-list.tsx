@@ -4,7 +4,7 @@ import { ClassForCardAndList } from '../../const';
 
 type NearPlacesListProps = {
   cards:TOfferCard[];
-  onListCardHover: (id:number | undefined) => void;
+  onListCardHover?: (id:number | undefined) => void;
 }
 
 export default function NearPlacesList({cards, onListCardHover}:NearPlacesListProps): JSX.Element {

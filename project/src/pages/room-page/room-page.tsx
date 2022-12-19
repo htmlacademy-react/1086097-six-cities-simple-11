@@ -7,13 +7,14 @@ import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
 import {TOfferCard} from '../../types';
 import {AuthorizationStatus} from '../../const';
-
 import NotFound from '../../pages/not-found/not-found';
 import {useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
-import {fetchCommentsAction, fetchOffersNearPlacesAction} from '../../store/api-action';
+import {fetchCommentsAction, fetchOffersNearPlacesAction, fetchCurrentOfferAction} from '../../store/api-action';
+import {getOffersNearPlaces, getComments, getCurrentOffer} from '../../store/offers-process/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selectors';
 
 export default function RoomPage(): JSX.Element {
   const params = useParams();
@@ -23,20 +24,17 @@ export default function RoomPage(): JSX.Element {
     if (params.id) {
       dispatch(fetchCommentsAction(params.id));
       dispatch(fetchOffersNearPlacesAction(params.id));
+      dispatch(fetchCurrentOfferAction(params.id));
     }
   },[dispatch, params]);
 
-  const {comments, offersNearPlaces, authorizationStatus, offers} = useAppSelector((state) => state);
+  const offersNearPlaces = useAppSelector(getOffersNearPlaces);
+  const comments = useAppSelector(getComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const currentCard = useAppSelector(getCurrentOffer);
   const commentsAmount = comments.length;
 
-  const [selectedCardNearPlaces, setSelectedCardNearPlaces] = useState<TOfferCard | undefined>();
-
-  const onListCardHover = (cardId:number | undefined) => {
-    const currentCardNearPlaces = offersNearPlaces.find((item) => item.id === cardId);
-    setSelectedCardNearPlaces(currentCardNearPlaces);
-  };
-
-  const currentCard: TOfferCard | undefined = offers.find((card) => card.id === Number(params.id));
+  // const currentCard: TOfferCard | undefined = offers.find((card) => card.id === Number(params.id));
 
   const getStars = (offer: TOfferCard) => Math.round(offer.rating * 20);
 
@@ -138,13 +136,13 @@ export default function RoomPage(): JSX.Element {
               </section>
             </div>
           </div>
-          {offersNearPlaces ? <Map cards={offersNearPlaces} selectedCard={selectedCardNearPlaces} classMapContainer={'property__map map'} /> : null}
+          {offersNearPlaces ? <Map cards={[...offersNearPlaces, currentCard]} selectedCard={currentCard} classMapContainer={'property__map map'} /> : null}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <NearPlacesList cards={offersNearPlaces} onListCardHover={onListCardHover} />
+              <NearPlacesList cards={offersNearPlaces} />
             </div>
           </section>
         </div>

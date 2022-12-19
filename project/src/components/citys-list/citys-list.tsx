@@ -1,16 +1,15 @@
 import City from '../city/city';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {changeCity, changeSortType} from '../../store/action';
-import {SortTypes} from '../../const';
+import {changeCity} from '../../store/offers-process/offers-process';
+import {getCitys} from '../../store/offers-process/selectors';
 
 export default function CitysList(): JSX.Element {
   const dispatch = useAppDispatch();
-  const citys = useAppSelector((state) => state.citys);
+  const citys = useAppSelector(getCitys);
 
   const handleLinkClick = (name: string) => {
     dispatch(changeCity(name));
-    dispatch(changeSortType(SortTypes.Popular));
   };
 
   return (
@@ -19,4 +18,3 @@ export default function CitysList(): JSX.Element {
     </ul>
   );
 }
-

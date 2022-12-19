@@ -6,7 +6,7 @@ type ListProps = {
   classOfList: string;
   classOfCard: string;
   cards:TOfferCard[];
-  onListCardHover: (id:number | undefined) => void;
+  onListCardHover?: (id:number | undefined) => void;
 }
 
 export default function List({classOfList, classOfCard, cards, onListCardHover}:ListProps): JSX.Element {
@@ -14,10 +14,10 @@ export default function List({classOfList, classOfCard, cards, onListCardHover}:
 
   const onCardHover = (idCard:number) => {
     setActiveCardId(idCard);
-    onListCardHover(activeCardId);
+    if (onListCardHover) {
+      onListCardHover(activeCardId);
+    }
   };
-
-  // /* eslint-disable */ console.log(activeCardId);
 
   return (
     <div className={`${classOfList} places__list`}>
