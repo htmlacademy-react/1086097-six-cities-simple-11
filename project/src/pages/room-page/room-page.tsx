@@ -7,7 +7,7 @@ import CommentForm from '../../components/comment-form/comment-form';
 import CommentList from '../../components/comment-list/comment-list';
 import {TOfferCard} from '../../types';
 import {AuthorizationStatus} from '../../const';
-import NotFound from '../../pages/not-found/not-found';
+import Loading from '../../components/loading/loading';
 import {useParams} from 'react-router-dom';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {useEffect} from 'react';
@@ -148,5 +148,5 @@ export default function RoomPage(): JSX.Element {
         </div>
       </main>
     </div>
-  ) : (<NotFound />);
+  ) : (<Loading />);
 }
