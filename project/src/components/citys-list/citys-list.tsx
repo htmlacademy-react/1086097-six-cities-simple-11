@@ -10,6 +10,7 @@ export default function CitysList(): JSX.Element {
 
   const handleLinkClick = (name: string) => {
     dispatch(changeCity(name));
+
   };
 
   return (

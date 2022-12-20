@@ -20,6 +20,13 @@ const initialState: TOfferProcess = {
   currentOffer: undefined,
 };
 
+const sortByType = {
+  [SortTypes.Popular]: sortByPopular,
+  [SortTypes.LowToHigh]: sortFromLowToHigh,
+  [SortTypes.HighToLow]: sortFromHighToLow,
+  [SortTypes.TopRatedFirst]: sortTopRatedFirst,
+};
+
 export const offersProcess = createSlice({
   name: NameSpace.Offers,
   initialState,
@@ -27,14 +34,9 @@ export const offersProcess = createSlice({
     changeCity: (state, action: PayloadAction<string>) => {
       state.currentNameOfCity = action.payload;
       state.offersByName = state.offers.filter((offer) => offer.city.name === state.currentNameOfCity);
+      state.offersByName = state.offersByName.sort(sortByType[state.sortType as keyof typeof sortByType]);
     },
     changeSortType: (state, action: PayloadAction<string>) => {
-      const sortByType = {
-        [SortTypes.Popular]: sortByPopular,
-        [SortTypes.LowToHigh]: sortFromLowToHigh,
-        [SortTypes.HighToLow]: sortFromHighToLow,
-        [SortTypes.TopRatedFirst]: sortTopRatedFirst,
-      };
       state.sortType = String(action.payload);
       state.offersByName = state.offersByName.sort(sortByType[state.sortType as keyof typeof sortByType]);
     },
